@@ -17,10 +17,10 @@
 }
 
 .loginTitle {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-family: "Kaushan Script", cursive;
+    font-size: 1.3rem;
+    font-weight: 500;
     color: #051036;
-    text-transform: uppercase;
 }
 
 .loginButton {
