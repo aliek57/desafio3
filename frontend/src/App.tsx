@@ -1,9 +1,11 @@
+import Login from "./pages/Login/Login"
+
 function App() {
 
   return (
     <>
       <div>
-        <button className='btn btn-primary'>Teste</button>
+        <Login/>
       </div>
     </>
   )
