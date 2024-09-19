@@ -12,10 +12,11 @@ import { useSignInWithFacebook } from '../../hooks/useSignInWithFacebook';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState<string | null>(null);
   
-  const [signInWithEmailAndPassword, user, loading, error] = useEmailPasswordSignIn(auth);
-  const [signInWithGoogle] = useSignInWithGoogle(auth);
-  const [signInWithFacebook] = useSignInWithFacebook(auth);
+  const [signInWithEmailAndPassword, user] = useEmailPasswordSignIn(auth);
+  const [signInWithGoogle, googleUser] = useSignInWithGoogle(auth);
+  const [signInWithFacebook, facebookUser] = useSignInWithFacebook(auth);
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,22 +30,26 @@ const Login = () => {
       await signInWithEmailAndPassword(email, password);
       setEmail('');
       setPassword('');
+      setLoginError(null);
     }catch(error) {
-      toast.error('Error during login. Please try again.');
+      setLoginError('Error during login. Please try again.');    
     }
   }
 
-    useEffect(() => {
-      if (user) {
-        toast.success(`Welcome aboard, ${user.user.displayName}!`);
-      }
-    }, [user]);
+  useEffect(() => {
+    if (user || googleUser || facebookUser) {
+      const displayName = user?.user.displayName || googleUser?.user.displayName || facebookUser?.user.displayName;
+      toast.success(`Welcome aboard, ${displayName}!`);
+      setLoginError(null);
+    }
+  }, [user, googleUser, facebookUser]);
   
     useEffect(() => {
-      if (error) {
-        toast.error('Error during login. Please try again.');
+      if (loginError) {
+        toast.error(loginError);
+        setLoginError(null);
       }
-    }, [error])
+    }, [loginError])
 
   return (
     <div className='d-flex align-items-center justify-content-center vh-100'>

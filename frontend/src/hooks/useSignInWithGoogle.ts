@@ -2,15 +2,15 @@ import { useState, useCallback } from 'react';
 import { Auth, AuthError, GoogleAuthProvider, signInWithPopup, UserCredential } from 'firebase/auth';
 
 type SignInWithPopupHook = [
-  () => Promise<UserCredential | undefined>,
-  UserCredential | undefined,
+  () => Promise<UserCredential | null>,
+  UserCredential | null,
   boolean,
   AuthError | undefined
 ];
 
 export const useSignInWithGoogle = (auth: Auth): SignInWithPopupHook => {
   const [error, setError] = useState<AuthError>();
-  const [loggedInUser, setLoggedInUser] = useState<UserCredential>();
+  const [loggedInUser, setLoggedInUser] = useState<UserCredential | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const doSignInWithGoogle = useCallback(async () => {
@@ -23,6 +23,7 @@ export const useSignInWithGoogle = (auth: Auth): SignInWithPopupHook => {
       return user;
     } catch (err) {
       setError(err as AuthError);
+      return null;
     } finally {
       setLoading(false);
     }
