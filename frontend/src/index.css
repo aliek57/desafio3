@@ -7,3 +7,17 @@
   margin: 0;
   padding: 0;
 }
+
+.navbar {
+  background-color: #ffff;
+}
+
+.navLink {
+  color: red;
+  margin-right: 20px;
+  transition: color 0.3s ease-in-out;
+}
+
+.navLink:hover {
+  color: blue ;
+}
