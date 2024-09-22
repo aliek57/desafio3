@@ -1,9 +1,10 @@
-import { Router } from 'express';
-import { getTours, getTour } from '../controllers/tourController.ts';
+import { Router } from "express";
+import { TourController } from "../controllers/tourController";
 
 const router = Router();
 
-router.get('/tours', getTours);
-router.get('/tours/:id', getTour);
+router.get("/category/:category", TourController.getToursByCategoryController);
+router.get("/", TourController.listToursController);
+router.get("/:id", TourController.getTourByIdController);
 
 export default router;
