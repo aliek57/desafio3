@@ -1,13 +1,14 @@
+/* Configuração inicial */
 @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 *{
   font-family: 'Work Sans', sans-serif;
-  /* font-family: "Kaushan Script", cursive; */
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* NavBar */
 .navbar-brand {
   margin-right: 3.5rem;
 }
@@ -71,4 +72,91 @@
 
 .loginButton:hover::after {
   font-weight: 400;
+}
+
+/* Footer */
+
+.footer {
+  background-color: #000000;
+  color: #ffff;
+  font-size: 0.9rem;
+}
+
+.footer h5 {
+  font-family: "Kaushan Script", cursive;
+  font-size: 1rem;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-grow: 1;
+  padding: 0 2rem;
+  position: relative;
+}
+
+.footer-column:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 1px;
+  height: 100%;
+  background-color: #333333;
+}
+
+.footer-column:last-child::after {
+  border: none;
+}
+
+.footer-highlight {
+  color: #FC5056;
+  font-weight: bold;
+}
+
+.footer-socialIcons a {
+  font-size: 20px;
+  color: #ffff;
+}
+
+.footer-middle {
+  flex-grow: 2;
+  padding-left: 40px;
+}
+
+.footer-column a {
+  color: #ffff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-column a:hover {
+  color: #FC5056;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+}
+
+.footer-column ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-input {
+  font-size: 0.9rem;
+}
+
+.footer .btn {
+  background-color: #FC5056;
+  border: none;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+.footer .btn:hover {
+  background-color: #FF3636;
 }
