@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
-import styles from './NavBar.module.css';
+// import styles from './NavBar.module.css';
 import { Navbar, Container, Nav } from "react-bootstrap";
+import { AiOutlineUser  } from "react-icons/ai";
 
 const NavBar: React.FC = () => {
     return (
@@ -12,31 +13,37 @@ const NavBar: React.FC = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <NavLink to="/" className={`nav-link navLink`}>
+                        <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'navLink activeLink' : 'navLink'}`}>
                             Home
                         </NavLink>
-                        <NavLink to="/about" className={`nav-link ${styles.navLink}`}>
+                        <NavLink to="/about" className={({ isActive }) => `nav-link ${isActive ? 'navLink activeLink' : 'navLink'}`}>
                             About
                         </NavLink>
-                        <NavLink to="/tours" className={`nav-link ${styles.navLink}`}>
+                        <NavLink to="/tours" className={({ isActive }) => `nav-link ${isActive ? 'navLink activeLink' : 'navLink'}`}>
                             Tours
                         </NavLink>
-                        <NavLink to="/destination" className={`nav-link ${styles.navLink}`}>
+                        <NavLink to="/destination" className={({ isActive }) => `nav-link ${isActive ? 'navLink activeLink' : 'navLink'}`}>
                             Destination
                         </NavLink>
-                        <NavLink to="/blog" className={`nav-link ${styles.navLink}`}>
+                        <NavLink to="/blog" className={({ isActive }) => `nav-link ${isActive ? 'navLink activeLink' : 'navLink'}`}>
                             Blog
                         </NavLink>
-                        <NavLink to="/pages" className={`nav-link ${styles.navLink}`}>
+                        <NavLink to="/pages" className={({ isActive }) => `nav-link ${isActive ? 'navLink activeLink' : 'navLink'}`}>
                             Pages
                         </NavLink>
-                        <NavLink to="/contact" className={`nav-link ${styles.navLink}`}>
+                        <NavLink to="/contact" className={({ isActive }) => `nav-link ${isActive ? 'navLink activeLink' : 'navLink'}`}>
                             Contact
                         </NavLink>
                     </Nav>
-                    <NavLink to="/login" className={`btn ${styles.loginButton}`}>
-                        Login / Sign Up
-                    </NavLink>
+                    <div className="loginContainer">
+                        <AiOutlineUser style={{ marginRight: '5px', width:'20', height:'20'}} />
+                        <NavLink to="/login" className='loginButton'>
+                            Login
+                        </NavLink>
+                        <NavLink to="/signup" className='loginButton'>
+                            Sign Up
+                        </NavLink>
+                    </div>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

@@ -1,12 +1,12 @@
 import "./Home.module.css";
-import NavBar from '../../components/Navbar/NavBar'
-import TourList from "../../components/TourList/TourList";
+import NavBar from "../../components/Navbar/Navbar";
+// import TourList from "../../components/TourList/TourList";
 
 const Home = () => {
   return (
     <div>
       <NavBar/>
-      <TourList/>
+      {/* <TourList/> */}
     </div>
   )
 }
