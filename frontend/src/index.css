@@ -160,3 +160,58 @@
 .footer .btn:hover {
   background-color: #FF3636;
 }
+
+/* TopNav */
+.topNav {
+  background-color: #f3f2f2;
+  color: #a3a3a3;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.2rem 0;
+}
+
+.left-side span {
+  margin-right: 1.5rem;
+  position: relative;
+}
+
+.left-side span:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  display: inline-block;
+  width: 1px;
+  height: 100%;
+  background-color: #a3a3a3;
+  right: -0.75rem;
+}
+
+.right-side a {
+  margin-left: 0.4rem;
+  color: #a3a3a3;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.right-side a:last-child::after {
+  content: '';
+  position: absolute;
+  display: inline-block;
+  width: 1px;
+  height: 100%;
+  background-color: #a3a3a3;
+  right: -0.4rem;
+  top: 50%;
+}
+
+.right-side a:hover {
+  color: #333333;
+}
+
+.selector {
+  text-transform: uppercase;
+  padding: 0.2rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #f3f2f2;
+  color: #333333;
+}

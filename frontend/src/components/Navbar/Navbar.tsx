@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-// import styles from './NavBar.module.css';
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { AiOutlineUser  } from "react-icons/ai";
 
