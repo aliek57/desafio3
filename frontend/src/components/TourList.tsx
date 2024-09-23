@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
+import { Container, Row } from 'react-bootstrap';
+import CardItem from './CardItem';
 
 interface TourProps {
     id: number;
@@ -28,22 +30,21 @@ const TourList: React.FC = () => {
         fetchData();
     }, []);
   return (
-    <div>
-      <h1>Teste Tours</h1>
+    <Container>
       {error && <p>{error}</p>}
-      <div>
+      <Row>
         {tours.map(tour => (
-          <div key={tour.id}>
-            <h2>{tour.title}</h2>
-            <p>{tour.description}</p>
-            <p>Price: ${tour.price}</p>
-            <p>Duration: {tour.durationDays} days</p>
-            {/* <p>Available from: {tour.availableFrom?.toISOString()}</p>
-            <p>Available to: {tour.availableTo?.toISOString()}</p> */}
-          </div>
+          <CardItem
+            key={tour.id}
+            id={tour.id}
+            title={tour.title}
+            description={tour.description}
+            price={tour.price}
+            durationDays={tour.durationDays}
+          />
         ))}
-      </div>
-    </div>
+      </Row>
+    </Container>
   )
 }
 

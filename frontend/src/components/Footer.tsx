@@ -16,6 +16,7 @@ const Footer: React.FC = () => {
             setErrors('Invalid email format');
             return false;
         }
+        setErrors('');
         return true;
     }
 
