@@ -1,9 +1,37 @@
-import React from 'react'
+import { useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap';
 import { CiFacebook, CiLinkedin, CiTwitter } from 'react-icons/ci';
 import { NavLink } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const Footer: React.FC = () => {
+    const [email, setEmail] = useState<string>('');
+    const [errors, setErrors] = useState<string>('');
+
+    const validateEmail = () => {
+        if (!email.match(emailRegex)) {
+            setErrors('Invalid email format');
+            return false;
+        }
+        return true;
+    }
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        
+        const isValid = validateEmail();
+
+        if (!isValid) {
+            toast.warning('Please provide a valid email.');
+            return;
+        }
+
+        toast.success('Email succesfully submitted!')
+        setEmail('');
+        setErrors('');
+    }
   return (
     <footer className="footer py-5">
         <Container>
@@ -57,15 +85,21 @@ const Footer: React.FC = () => {
                 </Col>
                 <Col md={3} className="footer-column">
                     <h5>Sign up Newsletter</h5>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <input 
                                 type="email" 
-                                className="form-control footer-input" 
-                                placeholder="Enter email..."/>
+                                className={`form-control footer-input ${errors && 'is-invalid'}`}
+                                id="email"
+                                value={email}
+                                placeholder="Enter email..."
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                    setErrors('');
+                                }}/>
                         </div>
                         <div className="invalid-feedback">
-                            
+                            {errors}
                         </div>
                         <button className="btn btn-primary">Submit</button>
                     </form>
