@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Container, Row, Col } from 'react-bootstrap';
 import { CiFacebook, CiLinkedin, CiTwitter } from 'react-icons/ci';
+import { FaRegPaperPlane } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -86,7 +87,8 @@ const Footer: React.FC = () => {
                 <Col md={3} className="footer-column">
                     <h5>Sign up Newsletter</h5>
                     <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
+                        <FaRegPaperPlane className='input-icon'/>
+                        <div className="mb-3 position-relative">
                             <input 
                                 type="email" 
                                 className={`form-control footer-input ${errors && 'is-invalid'}`}

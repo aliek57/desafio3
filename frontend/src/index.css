@@ -15,7 +15,7 @@
 
 .navbar {
   background-color: #ffff;
-  padding-bottom: 0;
+  padding-bottom: 0.8rem;
 }
 
 .navLink {
@@ -148,6 +148,21 @@
 
 .footer-input {
   font-size: 0.9rem;
+  color: #a3a3a3;
+  padding-left: 30px;
+}
+
+.footer .input-icon {
+  position: absolute;
+  height: 100%;
+  top: -40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 8px;
+  color: #a3a3a3;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .footer .btn {
@@ -160,6 +175,7 @@
 .footer .btn:hover {
   background-color: #FF3636;
 }
+
 
 /* TopNav */
 .topNav {
@@ -214,4 +230,93 @@
   border-radius: 5px;
   background-color: #f3f2f2;
   color: #333333;
+}
+
+/* Home */
+.section1 {
+  height: 45vh;
+  background-image: url('https://via.placeholder.com/1920x1080');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.section1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.text-overlay {
+  position: relative;
+  z-index: 9999;
+  color: #ffffff;
+  text-align: center;
+}
+
+.text-overlay h3 {
+  font-family: "Kaushan Script", cursive;
+  font-size: 1.5rem;
+  color: #FC5056;
+}
+
+.text-overlay h1 {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.text-overlay p {
+  font-size: 0.85rem;
+  margin-top: -0.8rem;
+}
+
+/* SearchBar */
+.searchbarContainer {
+  transform: translateY(-50%);
+  position: relative;
+  z-index: 3;
+}
+
+.searchbarContainer .custom-label {
+  font-family: "Kaushan Script", cursive;
+}
+
+.inputForm {
+  font-size: 0.9rem;
+  color: #a3a3a3;
+  padding-left: 30px;
+}
+
+.searchbarContainer .input-icon {
+  position: absolute;
+  height: 100%;
+  top: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 8px;
+  color: #a3a3a3;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.searchbarContainer .btn {
+  background-color: #FC5056;
+  border: none;
+  color: #ffffff;
+  font-size: 0.9rem;
+  margin-top: 2rem;
+}
+
+.searchbarContainer .btn:hover {
+  background-color: #FF3636;
 }
