@@ -4,6 +4,8 @@ import SignUp from './pages/SignUp/SignUp';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, Bounce } from 'react-toastify';
 import Home from './pages/Home/Home';
+import ErrorPage from './pages/ErrorPage';
+import AnotherErrorPage from './pages/AnotherErrorPage';
 
 function App() {
 
@@ -13,6 +15,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/error" element={<ErrorPage />}/>
+        <Route path="/error2" element={<AnotherErrorPage />}/>
       </Routes>
       <ToastContainer
         position="top-right"

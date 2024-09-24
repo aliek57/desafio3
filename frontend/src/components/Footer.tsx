@@ -60,10 +60,10 @@ const Footer: React.FC = () => {
                         <Col md={5}>
                             <h5>Company</h5>
                             <ul className="list-unstyled">
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Contact Us</a></li>
-                                <li><a href="#">Travel Guides</a></li>
-                                <li><a href="#">Data Policy</a></li>
+                                <li><a href="/error">About Us</a></li>
+                                <li><a href="/error">Contact Us</a></li>
+                                <li><a href="/error">Travel Guides</a></li>
+                                <li><a href="/error">Data Policy</a></li>
                             </ul>
                         </Col>
                         <Col md={5}>
