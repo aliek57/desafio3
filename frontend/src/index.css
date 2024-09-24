@@ -274,106 +274,6 @@
   background-color: #FF3636;
 }
 
-/* Home */
-.homeContainer {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.homeContent {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex: 1;
-}
-
-.section1 {
-  height: 45vh;
-  background-image: url('https://via.placeholder.com/1920x1080');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.section1::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-}
-
-.text-overlay {
-  position: relative;
-  z-index: 9999;
-  color: #ffffff;
-  text-align: center;
-}
-
-.text-overlay h3 {
-  font-family: "Kaushan Script", cursive;
-  font-size: 1.5rem;
-  color: #FC5056;
-}
-
-.text-overlay h1 {
-  font-size: 3rem;
-  font-weight: 600;
-}
-
-.text-overlay p {
-  font-size: 0.85rem;
-  margin-top: -0.8rem;
-}
-
-.section2 {
-  height: 20vh;
-}
-
-.section2 h5 {
-  font-family: "Kaushan Script", cursive;
-  color: #FC5056;
-  position: relative;
-  margin: 20px 0;
-}
-
-.section2 h5::before,
- .section2 h5::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20%;
-  height: 1px;
-  background-color: #c5c5c5;
-  z-index: -1;
-}
-
-.section2 h2 {
-  font-weight: 800;
-  margin-bottom: 1.2rem;
-}
-
-.section2 h4 {
-  font-family: "Kaushan Script", cursive;
-  font-weight: 600;
-  margin-right: 0.4rem;
-}
-
-.s2-bottom {
-  display: flex;
-  justify-content: center;
-}
-
 /* Error Page */
 .errorContainer {
   display: flex;
@@ -440,4 +340,214 @@
 .errorContent .errorBtn .biggerBtn {
   padding: 1rem;
   font-size: 1.2rem;
+}
+
+/* Home */
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.homeContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.section1 {
+  height: 45vh;
+  background-image: url('https://via.placeholder.com/1920x1080');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.section1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.text-overlay {
+  position: relative;
+  z-index: 9999;
+  color: #ffffff;
+  text-align: center;
+}
+
+.text-overlay h3 {
+  font-family: "Kaushan Script", cursive;
+  font-size: 1.5rem;
+  color: #FC5056;
+}
+
+.text-overlay h1 {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.text-overlay p {
+  font-size: 0.85rem;
+  margin-top: -0.8rem;
+}
+
+.section2 {
+  height: auto;
+}
+
+.subtitle {
+  font-family: "Kaushan Script", cursive;
+  color: #FC5056;
+  position: relative;
+  margin: 20px 0;
+}
+
+.subtitle::before,
+.subtitle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20%;
+  height: 1px;
+  background-color: #c5c5c5;
+  z-index: -1;
+}
+
+.title {
+  font-weight: 800;
+  margin-bottom: 1.2rem;
+}
+
+.section2 h4 {
+  font-family: "Kaushan Script", cursive;
+  font-weight: 600;
+  margin-right: 0.4rem;
+}
+
+.s2-bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.section3 {
+  height: auto;
+  margin-bottom: 1.5rem;
+  padding: 3rem 0;
+  background-color: #F7F8FA;
+}
+
+.section3 .image-fluid {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.section3 .image-fluid:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.section4 .title {
+  color: #051036;
+  font-weight: 700;
+  font-size: 2.5rem;
+}
+
+.section4 p {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.section4 ul li {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+.section4 .s4-icon {
+  color: #FC5056;
+  margin-right: 0.3rem;
+}
+
+.section4 .btn {
+  color: #051036;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 2px solid #c5c5c5;
+  border-radius: 5px;
+  width: 35%;
+  transition: all 0.3s ease;
+}
+
+.section4 .btn:hover {
+  color: #ffffff;
+  background-color: #FC5056;
+  border: 2px solid #FC5056;
+}
+
+.section5 {
+  /* height: auto; */
+  margin-bottom: 4rem;
+}
+
+.section6 {
+  background-color: #F7F8FA;
+  margin-bottom: 4rem;
+}
+
+.section6 .quote-icon {
+  margin: 0 auto;
+  font-size: 1.5rem;
+  color: #FC5056;
+}
+
+.section6 .quote {
+  font-size: 0.9rem;
+  color: #051036;
+  font-weight: 700;
+  margin-top: 1rem;
+}
+
+.section6 .author {
+  color: #A9AFBB;
+  font-size: 0.7rem;
+}
+
+.section7 .travelGuideContent p {
+  font-size: 0.75rem;
+  margin-bottom: 0.7rem;
+  margin-left: 0.7rem;
+  text-align: start;
+  color: #A9AFBB;
+}
+
+.section7 .travelGuideContent h5 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: start;
+  margin-left: 0.7rem;
+  color: #051036;
+}
+
+.section7 .travel-guide img {
+  transition: transform 0.3s ease;
+}
+
+.section7 .travel-guide img:hover {
+  transform: scale(1.05);
+  cursor: pointer;
 }

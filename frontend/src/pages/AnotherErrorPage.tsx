@@ -13,9 +13,9 @@ const AnotherErrorPage = () => {
         <Container>
             <Row className="align-items-center vh-100">
                 <Col md={6} className='col1'>
-                    <h1>We're sorry again!</h1>
+                    <h1>We're sorry again...</h1>
                     <h3>This page also doesn't exist. Just go back to home please.</h3>
-                    <div className="errorBtn">
+                    <div className="errorBtn d-flex justify-content-center">
                         <NavLink to="/" className="btn btn-primary biggerBtn">Go back to home</NavLink>
                     </div>
                 </Col>

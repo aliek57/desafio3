@@ -11,7 +11,7 @@ interface TourProps {
 }
 const CardItem: React.FC<TourProps> = ({ title, description, price, durationDays }) => {
   return (
-      <Col md={4} className="mb-4">
+      <Col md={3} className="mb-4">
         <Card>
         <Card.Img variant="top" src="https://via.placeholder.com/90x60" />
         <Card.Body>
