@@ -45,26 +45,15 @@ const Home = () => {
             </Row>
           </Container>
         </div>
-        {/* <Container className="my-5 bg-light">
-          <h2>Section 2</h2>
-        </Container>
-        <Container className="my-5 bg-dark">
-          <h2>Section 3</h2>
-        </Container>
-        <Container className="my-5 bg-light">
-          <h2>Section 4</h2>
-        </Container>
-        <Container className="my-5 bg-dark">
-          <h2>Section 5</h2>
-        </Container>
-        <Container className="my-5 bg-light">
-          <h2>Section 6</h2>
-        </Container>
-        <Container className="my-5 bg-dark">
-          <h2>Section 7</h2>
-        </Container> */}
+        <div className="section3">
+          <Container className="text-center">
+            <h5>Destination</h5>
+            <h2>Top Attractions Destinations</h2>
+            
+          </Container>
+        </div>
       </div>
-      {/* <Footer/> */}
+      <Footer/>
     </div>
   )
 }
