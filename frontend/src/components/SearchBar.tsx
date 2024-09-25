@@ -12,24 +12,26 @@ const SearchBar: React.FC = () => {
     const [searchType, setType] = useState('');
     const [searchDate, setDate] = useState<Date | null>(null);
     const [searchGuests, setGuests] = useState<number | ''>('');
+    const [errors, setErrors] = useState({
+        destination: false,
+        type: false,
+        date: false,
+        guests: false
+    })
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!searchDestination || !searchType || !searchDate || !searchGuests) {
-            toast.warning('Please fill in all required fields.');
-            setDestination('');
-            setType('');
-            setDate(null);
-            setGuests('');
-            return;
+        const hasErrors = {
+            destination: !searchDestination || /\d/.test(searchDestination),
+            type:!searchType || /\d/.test(searchType),
+            date: !searchDate,
+            guests: !searchGuests || isNaN(searchGuests as number)
         }
 
-        if (/\d/.test(searchDestination) || /\d/.test(searchType) || isNaN(searchGuests as number)) {
-            toast.error('Invalid search. Try again.');
-            setDestination('');
-            setType('');
-            setDate(null);
-            setGuests('');
+        setErrors(hasErrors);
+
+        if (Object.values(hasErrors).some(errors => errors)) {
+            toast.warning('Please fill in all required fields.');
             return;
         }
 
@@ -48,7 +50,7 @@ const SearchBar: React.FC = () => {
                         <Form.Label className="custom-label">Destination</Form.Label>
                         <FaRegPaperPlane className='input-icon'/>
                         <Form.Control 
-                            className="inputForm" 
+                            className={`inputForm ${errors.destination && 'is-invalid'}`} 
                             type="text" 
                             placeholder="Where to go?"
                             value={searchDestination}
@@ -60,7 +62,7 @@ const SearchBar: React.FC = () => {
                         <Form.Label className="custom-label">Type</Form.Label>
                         <CiFlag1 className='input-icon'/>
                         <Form.Control 
-                            className="inputForm" 
+                            className={`inputForm ${errors.destination && 'is-invalid'}`} 
                             type="text" 
                             placeholder="Activity" 
                             value={searchType}
@@ -74,7 +76,7 @@ const SearchBar: React.FC = () => {
                         <DatePicker
                             selected={searchDate}
                             onChange={(date) => setDate(date)}
-                            className='date-picker form-control'
+                            className={`form-control ${errors.destination && 'is-invalid'}`}
                             placeholderText='Date'
                             minDate={new Date()}
                             isClearable
@@ -86,7 +88,7 @@ const SearchBar: React.FC = () => {
                         <Form.Label className="custom-label">Guests</Form.Label>
                         <LuUsers className='input-icon'/>
                         <Form.Control 
-                            className="inputForm" 
+                            className={`inputForm ${errors.destination && 'is-invalid'}`}
                             type="text" 
                             placeholder="0" 
                             value={searchGuests}
