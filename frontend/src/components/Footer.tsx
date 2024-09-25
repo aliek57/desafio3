@@ -44,14 +44,16 @@ const Footer: React.FC = () => {
                     </NavLink>
                     <h5 className="mt-3">Need any help?</h5>
                     <p>
-                        <strong>CALL US: </strong>
+                        <strong>Call Us: </strong>
                         <span className="footer-highlight">(888)1234 5678</span>
                     </p>
-                    <p>Love Street, Muscat, Oman</p>
-                    <p>exaample@trisog.com</p>
-                    <div className="footer-socialIcons">
-                        <a href="#" className="me-3"> <CiFacebook/> </a>
-                        <a href="#" className="me-3"> <CiTwitter/> </a>
+                    <div>
+                        <p className='mb-1'>Love Street, Muscat, Oman</p>
+                        <p className='mt-1'>exaample@trisog.com</p>
+                    </div>
+                    <div className="footer-socialIcons mb-2">
+                        <a href="#" className="me-1"> <CiFacebook/> </a>
+                        <a href="#" className="me-1"> <CiTwitter/> </a>
                         <a href="#"> <CiLinkedin/> </a>
                     </div>
                 </Col>
@@ -75,8 +77,8 @@ const Footer: React.FC = () => {
                                 <li><a href="#">Hawaii</a></li>
                             </ul>
                         </Col>
-                        <Col md={2}>
-                            <ul className="list-unstyled mt-4">
+                        <Col md={2} className="mt-3">
+                            <ul className="list-unstyled">
                                 <li><a href="#">Tokyo</a></li>
                                 <li><a href="#">Sydney</a></li>
                                 <li><a href="#">Melbourne</a></li>
@@ -86,10 +88,10 @@ const Footer: React.FC = () => {
                     </Row>
                 </Col>
                 <Col md={3} className="footer-column">
-                    <h5>Sign up Newsletter</h5>
-                    <form onSubmit={handleSubmit}>
+                    <h5 className='mt-2'>Sign up Newsletter</h5>
+                    <form onSubmit={handleSubmit} className='mb-3'>
                         <FaRegPaperPlane className='input-icon'/>
-                        <div className="mb-3 position-relative">
+                        <div className="position-relative">
                             <input 
                                 type="email" 
                                 className={`form-control footer-input ${errors && 'is-invalid'}`}
@@ -104,7 +106,7 @@ const Footer: React.FC = () => {
                         <div className="invalid-feedback">
                             {errors}
                         </div>
-                        <button className="btn btn-primary">Submit</button>
+                        <button className="btn btn-primary mt-2">Submit</button>
                     </form>
                     <div className="mt-3">
                         <p>2024 Trisog All Right Reserved</p>

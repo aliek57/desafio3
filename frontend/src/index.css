@@ -249,6 +249,15 @@
   padding-left: 30px;
 }
 
+.react-datepicker__input-container input {
+  padding: .375rem .75rem .375rem 30px;
+}
+
+.react-datepicker__day--keyboard-selected, .react-datepicker__month-text--keyboard-selected, .react-datepicker__quarter-text--keyboard-selected, .react-datepicker__year-text--keyboard-selected {
+  background-color: #FC5056;
+  color: #ffffff;
+ } 
+
 .searchbarContainer .input-icon {
   position: absolute;
   height: 100%;
