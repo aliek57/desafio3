@@ -1,4 +1,5 @@
-import { Card, Col } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+import { CiClock2, CiStar } from 'react-icons/ci';
 
 interface TourProps {
   id: number;
@@ -6,21 +7,37 @@ interface TourProps {
   description?: string;
   price: number;
   durationDays: number;
+  location?: string;
+  rating?: number;
+  reviews?: number;
   // availableFrom?: Date;
   // availableTo?: Date;
 }
-const CardItem: React.FC<TourProps> = ({ title, description, price, durationDays }) => {
+const CardItem: React.FC<TourProps> = ({ title, description, price, durationDays, location, rating, reviews }) => {
   return (
-      <Col md={3} className="mb-4">
-        <Card>
-        <Card.Img variant="top" src="https://via.placeholder.com/90x60" />
-        <Card.Body>
-          <Card.Title>{title}</Card.Title>
-          <Card.Text>{description}</Card.Text>
-          <Card.Text>${price}</Card.Text>
-          <Card.Text>Duration: {durationDays} days</Card.Text>
-        </Card.Body>
-      </Card>
+      <Col className="tour-card">
+        <img src="https://via.placeholder.com/200" alt={title} className="card-image"/>
+        <div className="card-content">
+          <p className="card-location">{location}</p>
+          <h4 className="card-title">{title}</h4>
+          <div className="card-info">
+            <div className="card-rating">
+              <CiStar className="card-icon"/>
+              <span>{rating}</span>
+            </div>
+            <div className="card-reviews">
+              <p>{reviews} reviews</p>
+            </div>
+            <div>
+              <CiClock2 className="card-icon"/>
+              <p>{durationDays} days</p>
+            </div>
+          </div>
+          <div className="card-price">
+            <p>Starting From</p>
+            <h5>${price}</h5>
+          </div>
+        </div>
       </Col>
   )
 }

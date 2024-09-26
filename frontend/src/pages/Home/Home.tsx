@@ -27,7 +27,7 @@ const Home = () => {
             <h5 className="subtitle">Tours</h5>
             <h2 className="title">Most Popular Tours</h2>
             <TourList/>
-            <Row className="mt-3">
+            <Row className="mt-5">
               <Col md={3} className="s2-bottom">
                 <h4>120+</h4>
                 <p>Total Destination</p>
