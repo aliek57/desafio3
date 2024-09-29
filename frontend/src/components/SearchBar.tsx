@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { CiCalendar, CiFlag1 } from 'react-icons/ci'
 import { FaRegPaperPlane } from 'react-icons/fa'
 import { LuUsers } from 'react-icons/lu'
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const SearchBar: React.FC = () => {
@@ -13,19 +14,14 @@ const SearchBar: React.FC = () => {
     const [searchDate, setDate] = useState<Date | null>(null);
     const [searchGuests, setGuests] = useState<number | ''>('');
     const [errors, setErrors] = useState({
-        destination: false,
-        type: false,
-        date: false,
-        guests: false
+        destination: false
     })
+    const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const hasErrors = {
             destination: !searchDestination || /\d/.test(searchDestination),
-            type:!searchType || /\d/.test(searchType),
-            date: !searchDate,
-            guests: !searchGuests || isNaN(searchGuests as number)
         }
 
         setErrors(hasErrors);
@@ -35,11 +31,14 @@ const SearchBar: React.FC = () => {
             return;
         }
 
-        toast.success('Looking');
+        navigate(`/tours?search=${encodeURIComponent(searchDestination)}`);
         setDestination('');
         setType('');
         setDate(null);
         setGuests('');
+        setErrors({
+            destination: false,
+        });
     }
   return (
     <Container className='searchbarContainer'>
@@ -62,7 +61,7 @@ const SearchBar: React.FC = () => {
                         <Form.Label className="custom-label">Type</Form.Label>
                         <CiFlag1 className='input-icon'/>
                         <Form.Control 
-                            className={`inputForm ${errors.destination && 'is-invalid'}`} 
+                            className={`inputForm`} 
                             type="text" 
                             placeholder="Activity" 
                             value={searchType}
@@ -76,7 +75,7 @@ const SearchBar: React.FC = () => {
                         <DatePicker
                             selected={searchDate}
                             onChange={(date) => setDate(date)}
-                            className={`form-control ${errors.destination && 'is-invalid'}`}
+                            className={`form-control`}
                             placeholderText='Date'
                             minDate={new Date()}
                             isClearable
@@ -88,7 +87,7 @@ const SearchBar: React.FC = () => {
                         <Form.Label className="custom-label">Guests</Form.Label>
                         <LuUsers className='input-icon'/>
                         <Form.Control 
-                            className={`inputForm ${errors.destination && 'is-invalid'}`}
+                            className={`inputForm`}
                             type="text" 
                             placeholder="0" 
                             value={searchGuests}

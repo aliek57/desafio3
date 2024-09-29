@@ -6,6 +6,7 @@ import { ToastContainer, Bounce } from 'react-toastify';
 import Home from './pages/Home/Home';
 import ErrorPage from './pages/ErrorPage';
 import AnotherErrorPage from './pages/AnotherErrorPage';
+import ToursPackage from './pages/ToursPackage';
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="tours" element={<ToursPackage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/error" element={<ErrorPage />}/>
