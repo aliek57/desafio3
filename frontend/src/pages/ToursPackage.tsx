@@ -1,6 +1,17 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 import axios from 'axios'
+import TopNav from '../components/TopNav';
+import NavBar from '../components/Navbar/Navbar';
+import Footer from '../components/Footer';
+import SearchBar from '../components/SearchBar';
+import { Col, Container, Nav, Row } from 'react-bootstrap';
+import Search from '../components/Filters/Search';
+import Price from '../components/Filters/Price';
+import Categories from '../components/Filters/Categories';
+import Destinations from '../components/Filters/Destinations';
+import Reviews from '../components/Filters/Reviews';
 
 type Destination = {
     name: string;
@@ -46,18 +57,51 @@ const ToursPackage = () => {
             setFilteredTours(filteredTours)
     }, [location.search, tours])
   return (
-    <div>
-      <h2>Result</h2>
-      {filteredTours.length > 0 ? (
-        filteredTours.map(tour => (
-          <div key={tour.id}>
-            <h3>{tour.destination.name}</h3>
-            <p>{tour.destination.city}, {tour.destination.country}</p>
-          </div>
-        ))
-      ) : (
-        <p>No tours found matching the search criteria.</p>
-      )}
+    <div className='packageContainer'>
+        <TopNav/>
+        <NavBar/>
+        <div className="packageContent">
+            <div className="section1">
+                <Container className="text-center text-overlay">
+                    <h1>Travel & Adventures</h1>
+                    <Nav className='s1-nav'>
+                        <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'navLink activeLink' : 'navLink'}`}>
+                            Home
+                        </NavLink>
+                        <NavLink to="/tours" className={({ isActive }) => `nav-link ${isActive ? 'navLink activeLink' : 'navLink'}`}>
+                            Tour Package
+                        </NavLink>
+                        </Nav>
+                </Container>
+            </div>
+            <SearchBar/>
+            <div className="section2">
+                <Container>
+                    <Row>
+                        <Col sm={3} className=''>
+                            <Search/>
+                            <Price/>
+                            <Categories/>
+                            <Destinations/>
+                            <Reviews/>
+                        </Col>
+                        <Col className='bg-danger'>
+                        <h5>Tours</h5>
+                        <h2>Popular Tours</h2>
+                        <div className="tourList">
+                            {filteredTours.map(tour => (
+                                <div key={tour.id} className="tour">
+                                    <h4>{tour.destination.name}</h4>
+                                    <p>{tour.destination.city}, {tour.destination.country}</p>
+                                </div>
+                            ))}
+                        </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+        </div>
+        <Footer/>
     </div>
   )
 }
