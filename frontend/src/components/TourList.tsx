@@ -24,7 +24,7 @@ const TourList: React.FC = () => {
     const [tours, setTours] = useState<TourProps[]>([
       {
         id: 1,
-        title: 'Tour 1 Tour 1 Tour 1',
+        title: 'Tour 1 Tour 1',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ipsum eget neque tincidunt mattis a at mauris. Sed sed lectus a purus convallis consequat.',
         price: 150,
         durationDays: 7,
@@ -62,46 +62,46 @@ const TourList: React.FC = () => {
         rating: 4.8,
         reviews: 150
       },
-      // {
-      //   id: 5,
-      //   title: 'Tour 5',
-      //   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ipsum eget neque tincidunt mattis a at mauris. Sed sed lectus a purus convallis consequat.',
-      //   price: 200,
-      //   durationDays: 10,
-      //   location: 'Cidade do Lado',
-      //   rating: 4.8,
-      //   reviews: 150
-      // },
-      // {
-      //   id: 6,
-      //   title: 'Tour 6',
-      //   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ipsum eget neque tincidunt mattis a at mauris. Sed sed lectus a purus convallis consequat.',
-      //   price: 200,
-      //   durationDays: 10,
-      //   location: 'Cidade do Lado',
-      //   rating: 4.8,
-      //   reviews: 150
-      // },
-      // {
-      //   id: 7,
-      //   title: 'Tour 7',
-      //   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ipsum eget neque tincidunt mattis a at mauris. Sed sed lectus a purus convallis consequat.',
-      //   price: 200,
-      //   durationDays: 10,
-      //   location: 'Cidade do Lado',
-      //   rating: 4.8,
-      //   reviews: 150
-      // },
-      // {
-      //   id: 8,
-      //   title: 'Tour 8',
-      //   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ipsum eget neque tincidunt mattis a at mauris. Sed sed lectus a purus convallis consequat.',
-      //   price: 200,
-      //   durationDays: 10,
-      //   location: 'Cidade do Lado',
-      //   rating: 4.8,
-      //   reviews: 150
-      // },
+      {
+        id: 5,
+        title: 'Tour 5',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ipsum eget neque tincidunt mattis a at mauris. Sed sed lectus a purus convallis consequat.',
+        price: 200,
+        durationDays: 10,
+        location: 'Cidade do Lado',
+        rating: 4.8,
+        reviews: 150
+      },
+      {
+        id: 6,
+        title: 'Tour 6',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ipsum eget neque tincidunt mattis a at mauris. Sed sed lectus a purus convallis consequat.',
+        price: 200,
+        durationDays: 10,
+        location: 'Cidade do Lado',
+        rating: 4.8,
+        reviews: 150
+      },
+      {
+        id: 7,
+        title: 'Tour 7',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ipsum eget neque tincidunt mattis a at mauris. Sed sed lectus a purus convallis consequat.',
+        price: 200,
+        durationDays: 10,
+        location: 'Cidade do Lado',
+        rating: 4.8,
+        reviews: 150
+      },
+      {
+        id: 8,
+        title: 'Tour 8',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ipsum eget neque tincidunt mattis a at mauris. Sed sed lectus a purus convallis consequat.',
+        price: 200,
+        durationDays: 10,
+        location: 'Cidade do Lado',
+        rating: 4.8,
+        reviews: 150
+      },
     ]);
 
     // const [error, setError] = useState<string | null>(null);
@@ -121,7 +121,7 @@ const TourList: React.FC = () => {
     <Swiper
       direction='horizontal'
       centeredSlides={false}
-      // spaceBetween={0}
+      loop={true}
       slidesPerView={4}
       autoplay={{ 
         delay: 800,

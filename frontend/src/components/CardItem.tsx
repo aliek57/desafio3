@@ -23,12 +23,12 @@ const CardItem: React.FC<TourProps> = ({ title, description, price, durationDays
           <div className="card-info">
             <div className="card-rating">
               <CiStar className="card-icon"/>
-              <span>{rating}</span>
+              <p>{rating}</p>
             </div>
             <div className="card-reviews">
               <p>{reviews} reviews</p>
             </div>
-            <div>
+            <div className='card-duration'>
               <CiClock2 className="card-icon"/>
               <p>{durationDays} days</p>
             </div>
