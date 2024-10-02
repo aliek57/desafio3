@@ -578,11 +578,19 @@
 
 /* Carrossel Item */
 .tour-card {
+  width: 100%;
+  height: 400px;
   padding: 1rem;
   text-align: start;
   margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.tour-card:hover {
+  transform: scale(1.05);
+  cursor: pointer;
 }
 
 .card-content {
@@ -604,7 +612,7 @@
 
 .card-title {
   font-family: 'Work Sans', sans-serif !important;
-  font-size: 1.5rem !important;
+  font-size: 1.2rem !important;
   font-weight: 700 !important;
   padding: 0.5rem 0 !important;
   color: #051036 !important;
@@ -931,4 +939,12 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1rem;
   margin-top: 2rem;
+}
+
+.packageContent .tourResult .notFound {
+  font-size: 0.9rem;
+  color: #a3a3a3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

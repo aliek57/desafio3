@@ -20,7 +20,6 @@ type Tour = {
   description?: string;
   price: number;
   durationDays: number;
-  location?: string;
   rating?: number;
   reviews?: number;
 }
@@ -34,6 +33,7 @@ const TourList: React.FC = () => {
             try {
                 const response = await axios.get<Tour[]>('http://localhost:3333/tours/');
                 setTours(response.data);
+                console.log('resultado: ', response.data);
             } catch (error) {
                 setError('Failed to fetch tours.');
             }
@@ -61,12 +61,11 @@ const TourList: React.FC = () => {
           {tours.map(tour => (
             <SwiperSlide key={tour.id}>
               <CardItem
-                key={tour.id}
                 id={tour.id}
                 title={tour.title}
                 price={tour.price}
+                destination={tour.destination}
                 durationDays={tour.durationDays}
-                location={tour.location}
                 rating={tour.rating}
                 reviews={tour.reviews}
               />

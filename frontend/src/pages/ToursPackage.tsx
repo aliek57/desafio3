@@ -14,7 +14,6 @@ import Destinations from '../components/Filters/Destinations';
 import Reviews from '../components/Filters/Reviews';
 import { BiSortAlt2 } from 'react-icons/bi';
 import CardItem from '../components/CardItem';
-// import ReactPaginate from 'react-paginate';
 
 type Destination = {
     name: string;
@@ -35,19 +34,10 @@ type Tour = {
 }
 
 const ToursPackage = () => {
-    // const [currentPage, setCurrentPage] = useState(0);
-
-    // const itemsPerPage = 9;
-    // const offset = currentPage * itemsPerPage;
-    // const currentItems = filteredMovies.slice(offset, offset + itemsPerPage);
-    // const pageCount = Math.ceil(filteredMovies.length / itemsPerPage);
-
-    // const handlePageClick = ({ selected }) => {
-    //     setCurrentPage(selected);
-    // };
     const location = useLocation()
     const [tours, setTours] = useState<Tour[]>([])
     const [filteredTours, setFilteredTours] = useState<Tour[]>([])
+    const [sortOp, setSortOp] = useState<string>('');
 
     const getSearchTerm = () => {
         const params = new URLSearchParams(location.search);
@@ -68,14 +58,45 @@ const ToursPackage = () => {
     }, [])
 
     useEffect(() => {
-        const searchTerm = getSearchTerm()
-        console.log('search term:', searchTerm)
-        const filteredTours = tours.filter(tour => 
-            tour.destination.name.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        console.log('filtered tour: ', filteredTours)
-            setFilteredTours(filteredTours)
-    }, [location.search, tours])
+        const searchTerm = getSearchTerm();
+        if (searchTerm) {
+            const filteredTours = tours.filter(tour => 
+                tour.destination.name.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            setFilteredTours(filteredTours);
+        } else {
+            setFilteredTours(tours);
+        }
+    }, [location.search, tours]);
+
+    useEffect(() => {
+        const sortTours = () => {
+            const sortedTours = [...filteredTours];
+            
+            switch (sortOp) {
+                case 'title':
+                    sortedTours.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case 'price':
+                    sortedTours.sort((a, b) => a.price - b.price);
+                    break;
+                case 'rating':
+                    // sortedTours.sort((a, b) => a.rating - b.rating);
+                    break;
+                case 'category':
+                    sortedTours.sort((a, b) => a.destination.name.localeCompare(b.destination.name));
+                    break;
+                default:
+                    break;
+            }
+            setFilteredTours(sortedTours);
+        }
+        sortTours();
+    }, [sortOp, filteredTours]);
+
+    const handleSortOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortOp(e.target.value);
+    }
   return (
     <div className='packageContainer'>
         <TopNav/>
@@ -107,11 +128,11 @@ const ToursPackage = () => {
                         </Col>
                         <Col>
                         <div className='s2-top'>
-                            <p className="totalTours">16 Tours</p>
+                            <p className="totalTours">{filteredTours.length} Tours</p>
                             <div className='ordering'>
                                 <p>Sort by</p>
                                 <BiSortAlt2 className='ordering-icon'/>
-                                <select>
+                                <select value={sortOp} onChange={handleSortOption}>
                                     <option value="title">Title</option>
                                     <option value="price">Price</option>
                                     <option value="rating">Rating</option>
@@ -120,15 +141,7 @@ const ToursPackage = () => {
                             </div>
                         </div>
                         <div className="tourResult">
-                            {/* <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem /> */}
+                            {filteredTours.length === 0 && <p className='notFound'>No tours found.</p>}
                             {filteredTours.map(tour => (
                                 <CardItem
                                 key={tour.id}
@@ -136,36 +149,11 @@ const ToursPackage = () => {
                                 title={tour.title}
                                 price={tour.price}
                                 durationDays={tour.durationDays}
-                                location={tour.location}
+                                destination={tour.destination}
                                 rating={tour.rating}
                                 reviews={tour.reviews}
                               />
                             ))}
-                            {/* <div className={styles.paginate}>
-                            <ReactPaginate
-                                previousLabel={">"}
-                                nextLabel={"<"}
-                                breakLabel={"..."}
-                                breakClassName={"break-me"}
-                                pageCount={pageCount}
-                                marginPagesDisplayed={2}
-                                pageRangeDisplayed={3}
-                                onPageChange={handlePageClick}
-                                containerClassName={styles.pagination}
-                                subContainerClassName={"pages pagination"}
-                                activeClassName={styles.active}
-                                previousClassName={
-                                    currentPage === 0
-                                        ? `${styles.previous} ${styles.disabled}`
-                                        : styles.previous
-                                }
-                                nextClassName={
-                                    currentPage === pageCount - 1
-                                        ? `${styles.next} ${styles.disabled}`
-                                        : styles.next
-                                }
-                            />
-                        </div> */}
                         </div>
                         </Col>
                     </Row>
