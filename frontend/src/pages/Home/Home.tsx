@@ -7,6 +7,7 @@ import SearchBar from "../../components/SearchBar";
 import TourList from "../../components/TourList";
 import { ImCheckmark2 } from "react-icons/im";
 import { PiQuotes } from "react-icons/pi";
+import CatList from "../../components/CatList";
 
 const Home = () => {
   return (
@@ -115,56 +116,7 @@ const Home = () => {
             <h5 className="subtitle">Browse By Category</h5>
             <h2 className="title">Pick a Tour Type</h2>
             <Row className="mt-4 d-flex justify-content-center">
-              <Col xs={12} sm={6} md={2} className="d-flex justify-content-center">
-                <Card>
-                  <Card.Img variant="top" src="https://via.placeholder.com/50" />
-                  <Card.Body>
-                    <Card.Title>Adventure</Card.Title>
-                    <Card.Text>10 Tours+</Card.Text>
-                    <Card.Text>From $250</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col xs={12} sm={6} md={2} className="d-flex justify-content-center">
-                <Card>
-                  <Card.Img variant="top" src="https://via.placeholder.com/50" />
-                  <Card.Body>
-                    <Card.Title>Adventure</Card.Title>
-                    <Card.Text>10 Tours+</Card.Text>
-                    <Card.Text>From $250</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col xs={12} sm={6} md={2} className="d-flex justify-content-center">
-                <Card>
-                  <Card.Img variant="top" src="https://via.placeholder.com/50" />
-                  <Card.Body>
-                    <Card.Title>Adventure</Card.Title>
-                    <Card.Text>10 Tours+</Card.Text>
-                    <Card.Text>From $250</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col xs={12} sm={6} md={2} className="d-flex justify-content-center">
-                <Card>
-                  <Card.Img variant="top" src="https://via.placeholder.com/50" />
-                  <Card.Body>
-                    <Card.Title>Adventure</Card.Title>
-                    <Card.Text>10 Tours+</Card.Text>
-                    <Card.Text>From $250</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-              <Col xs={12} sm={6} md={2} className="d-flex justify-content-center">
-                <Card>
-                  <Card.Img variant="top" src="https://via.placeholder.com/50" />
-                  <Card.Body>
-                    <Card.Title>Adventure</Card.Title>
-                    <Card.Text>10 Tours+</Card.Text>
-                    <Card.Text>From $250</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
+              <CatList />
             </Row>
           </Container>
         </div>

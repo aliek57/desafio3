@@ -78,7 +78,7 @@ const SearchBar: React.FC = () => {
                             className={`form-control`}
                             placeholderText='Date'
                             minDate={new Date()}
-                            isClearable
+                            isClearable                          
                             />
                     </Form.Group>           
                 </Col>
