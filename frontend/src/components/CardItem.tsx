@@ -1,8 +1,15 @@
 import { Col } from 'react-bootstrap';
 import { CiClock2, CiStar } from 'react-icons/ci';
 
-interface TourProps {
-  id: number;
+type Destination = {
+  name: string;
+  city: string;
+  country: string;
+}
+
+type Tour = {
+  id: number,
+  destination: Destination;
   title: string;
   description?: string;
   price: number;
@@ -10,10 +17,18 @@ interface TourProps {
   location?: string;
   rating?: number;
   reviews?: number;
-  // availableFrom?: Date;
-  // availableTo?: Date;
 }
-const CardItem: React.FC<TourProps> = ({ title, description, price, durationDays, location, rating, reviews }) => {
+// interface TourProps {
+//   id: number;
+//   title: string;
+//   description?: string;
+//   price: number;
+//   durationDays: number;
+//   location?: string;
+//   rating?: number;
+//   reviews?: number;
+// }
+const CardItem: React.FC<Tour> = ({ title, description, price, durationDays, location, rating, reviews }) => {
   return (
       <Col className="tour-card">
         <img src="https://via.placeholder.com/200" alt={title} className="card-image"/>

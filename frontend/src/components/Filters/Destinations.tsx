@@ -9,7 +9,7 @@ const europe = ["France", "Greece"]
 const Destinations: React.FC = () => {
   return (
     <div className='mb-3 filter'>
-        <h4 className='filterTitle'>Categories</h4>
+        <h4 className='filterTitle'>Destinations</h4>
         <Form>
             <h5 className="subtitle">Africa</h5>
             {africa.map((af, index) => (

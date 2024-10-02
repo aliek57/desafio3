@@ -25,6 +25,13 @@ type Destination = {
 type Tour = {
     id: number,
     destination: Destination;
+    title: string;
+    description?: string;
+    price: number;
+    durationDays: number;
+    location?: string;
+    rating?: number;
+    reviews?: number;
 }
 
 const ToursPackage = () => {
@@ -38,37 +45,37 @@ const ToursPackage = () => {
     // const handlePageClick = ({ selected }) => {
     //     setCurrentPage(selected);
     // };
-    // const location = useLocation()
-    // const [tours, setTours] = useState<Tour[]>([])
-    // const [filteredTours, setFilteredTours] = useState<Tour[]>([])
+    const location = useLocation()
+    const [tours, setTours] = useState<Tour[]>([])
+    const [filteredTours, setFilteredTours] = useState<Tour[]>([])
 
-    // const getSearchTerm = () => {
-    //     const params = new URLSearchParams(location.search);
-    //     return params.get('search') || '';
-    // }
+    const getSearchTerm = () => {
+        const params = new URLSearchParams(location.search);
+        return params.get('search') || '';
+    }
 
-    // useEffect(() => {
-    //     const fetchTours = async () => {
-    //         try {
-    //             const response = await axios.get<Tour[]>('http://localhost:3333/tours/')
-    //             setTours(response.data)
-    //             setFilteredTours(response.data)
-    //         } catch (error) {
-    //             console.error('Error fetching tours:', error)
-    //         }
-    //     }
-    //     fetchTours()
-    // }, [])
+    useEffect(() => {
+        const fetchTours = async () => {
+            try {
+                const response = await axios.get<Tour[]>('http://localhost:3333/tours/')
+                setTours(response.data)
+                setFilteredTours(response.data)
+            } catch (error) {
+                console.error('Error fetching tours:', error)
+            }
+        }
+        fetchTours()
+    }, [])
 
-    // useEffect(() => {
-    //     const searchTerm = getSearchTerm()
-    //     console.log('search term:', searchTerm)
-    //     const filteredTours = tours.filter(tour => 
-    //         tour.destination.name.toLowerCase().includes(searchTerm.toLowerCase())
-    //     )
-    //     console.log('filtered tour: ', filteredTours)
-    //         setFilteredTours(filteredTours)
-    // }, [location.search, tours])
+    useEffect(() => {
+        const searchTerm = getSearchTerm()
+        console.log('search term:', searchTerm)
+        const filteredTours = tours.filter(tour => 
+            tour.destination.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        console.log('filtered tour: ', filteredTours)
+            setFilteredTours(filteredTours)
+    }, [location.search, tours])
   return (
     <div className='packageContainer'>
         <TopNav/>
@@ -113,6 +120,7 @@ const ToursPackage = () => {
                             </div>
                         </div>
                         <div className="tourResult">
+                            {/* <CardItem />
                             <CardItem />
                             <CardItem />
                             <CardItem />
@@ -120,14 +128,19 @@ const ToursPackage = () => {
                             <CardItem />
                             <CardItem />
                             <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            {/* {filteredTours.map(tour => (
-                                <div key={tour.id} className="tour">
-                                    <h4>{tour.destination.name}</h4>
-                                    <p>{tour.destination.city}, {tour.destination.country}</p>
-                                </div>
-                            ))} */}
+                            <CardItem /> */}
+                            {filteredTours.map(tour => (
+                                <CardItem
+                                key={tour.id}
+                                id={tour.id}
+                                title={tour.title}
+                                price={tour.price}
+                                durationDays={tour.durationDays}
+                                location={tour.location}
+                                rating={tour.rating}
+                                reviews={tour.reviews}
+                              />
+                            ))}
                             {/* <div className={styles.paginate}>
                             <ReactPaginate
                                 previousLabel={">"}
