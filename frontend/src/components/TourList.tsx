@@ -56,7 +56,7 @@ const TourList: React.FC = () => {
       modules={[Autoplay, Pagination]}
       className='carrossel'
     >
-      <Container>
+      <Container className='list'>
         {error && <p>{error}</p>}
           {tours.map(tour => (
             <SwiperSlide key={tour.id}>

@@ -8,6 +8,7 @@ class Tour {
     availableTo?: Date;
     destinationId: number;
     createdAt: string;
+    categories?: number[];
 
 
     constructor(payload: Tour){
@@ -20,6 +21,7 @@ class Tour {
         this.availableTo = payload.availableTo;
         this.destinationId = payload.destinationId;
         this.createdAt = payload.createdAt;
+        this.categories = payload.categories;
     }
 }
 

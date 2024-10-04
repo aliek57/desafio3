@@ -31,6 +31,7 @@ type Tour = {
     location?: string;
     rating?: number;
     reviews?: number;
+    tourCategories: { category: { id: number; name: string; }}[];
 }
 
 const ToursPackage = () => {
@@ -38,6 +39,9 @@ const ToursPackage = () => {
     const [tours, setTours] = useState<Tour[]>([])
     const [filteredTours, setFilteredTours] = useState<Tour[]>([])
     const [sortOp, setSortOp] = useState<string>('');
+    const [maxPrice, setMaxPrice] = useState<number>(0);
+    const [minPrice, setMinPrice] = useState<number>(0);
+    const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
 
     const getSearchTerm = () => {
         const params = new URLSearchParams(location.search);
@@ -48,48 +52,106 @@ const ToursPackage = () => {
         const fetchTours = async () => {
             try {
                 const response = await axios.get<Tour[]>('http://localhost:3333/tours/')
+                console.log('Fetched Tours:', response.data)
                 setTours(response.data)
                 setFilteredTours(response.data)
+                setMaxPrice(Math.max(...response.data.map(tour => tour.price)))
+                setMinPrice(Math.min(...response.data.map(tour => tour.price)))
             } catch (error) {
                 console.error('Error fetching tours:', error)
             }
         }
         fetchTours()
-    }, [])
+    }, []);
 
-    useEffect(() => {
-        const searchTerm = getSearchTerm();
+    const handleSearch = (searchTerm: string) => {
         if (searchTerm) {
-            const filteredTours = tours.filter(tour => 
-                tour.destination.name.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-            setFilteredTours(filteredTours);
+            const filtered = tours.filter(tour => 
+                tour.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                tour.destination.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                tour.destination.country.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredTours(filtered);
         } else {
             setFilteredTours(tours);
         }
-    }, [location.search, tours]);
+    }
+
+    const handlePrice = (minPrice: number, maxPrice: number) => {
+        const filtered = tours.filter(tour => tour.price >= minPrice && tour.price <= maxPrice);
+        setFilteredTours(filtered);
+    }
+
+    const handleCategory = (categoryId: number) => {
+        const newSelectedCategories = 
+            selectedCategories.includes(categoryId) ?
+            selectedCategories.filter(id => id !== categoryId) :
+            [...selectedCategories, categoryId];
+        
+        setSelectedCategories(newSelectedCategories);
+        console.log('Selected Categories:', newSelectedCategories)
+
+        if (newSelectedCategories.length > 0) {
+            const filtered = tours.filter(tour => {
+                console.log('Tour Categories:', tour.tourCategories)
+                return tour.tourCategories && Array.isArray(tour.tourCategories) && 
+                    newSelectedCategories.some(id => 
+                        tour.tourCategories.some(cat => cat.category.id === id)
+                )
+            });
+            console.log('Filtered Tours:', filtered)
+            setFilteredTours(filtered);
+        } else {
+            setFilteredTours(tours);
+        }
+    }
+
+    useEffect(() => {
+        let updatedTours = [...tours];
+
+        const searchTerm = getSearchTerm();
+        if (searchTerm) {
+            updatedTours = updatedTours.filter(tour =>
+                tour.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                tour.destination.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                tour.destination.country.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+        }
+
+        if (selectedCategories.length > 0) {
+            updatedTours = updatedTours.filter(tour => 
+                tour.tourCategories && selectedCategories.some(id => 
+                    tour.tourCategories.some(cat => cat.category.id === id)
+                )
+            )
+        }
+
+        setFilteredTours(updatedTours);
+    }, [location.search, tours, selectedCategories]);
 
     useEffect(() => {
         const sortTours = () => {
-            const sortedTours = [...filteredTours];
+            if (filteredTours.length > 0) {
+                const sortedTours = [...filteredTours];
             
-            switch (sortOp) {
-                case 'title':
-                    sortedTours.sort((a, b) => a.title.localeCompare(b.title));
-                    break;
-                case 'price':
-                    sortedTours.sort((a, b) => a.price - b.price);
-                    break;
-                case 'rating':
-                    // sortedTours.sort((a, b) => a.rating - b.rating);
-                    break;
-                case 'category':
-                    sortedTours.sort((a, b) => a.destination.name.localeCompare(b.destination.name));
-                    break;
-                default:
-                    break;
-            }
-            setFilteredTours(sortedTours);
+                switch (sortOp) {
+                    case 'title':
+                        sortedTours.sort((a, b) => a.title.localeCompare(b.title));
+                        break;
+                    case 'price':
+                        sortedTours.sort((a, b) => a.price - b.price);
+                        break;
+                    case 'rating':
+                        // sortedTours.sort((a, b) => a.rating - b.rating);
+                        break;
+                    case 'category':
+                        sortedTours.sort((a, b) => a.destination.name.localeCompare(b.destination.name));
+                        break;
+                    default:
+                        break;
+                }
+                setFilteredTours(sortedTours);
+                }
         }
         sortTours();
     }, [sortOp, filteredTours]);
@@ -120,9 +182,9 @@ const ToursPackage = () => {
                 <Container>
                     <Row>
                         <Col sm={3}>
-                            <Search/>
-                            <Price/>
-                            <Categories/>
+                            <Search onSearch={handleSearch}/>
+                            <Price maxTourPrice={maxPrice} minTourPrice={minPrice} onPrice={handlePrice}/>
+                            <Categories onCategory={handleCategory}/>
                             <Destinations/>
                             <Reviews/>
                         </Col>

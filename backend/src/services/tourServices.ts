@@ -24,6 +24,7 @@ class TourService {
                     select: {
                         category: {
                             select: {
+                                id: true,
                                 name: true
                             }
                         }
@@ -65,6 +66,7 @@ class TourService {
                     select: {
                         category: {
                             select: {
+                                id: true,
                                 name: true
                             }
                         }
