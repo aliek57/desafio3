@@ -18,6 +18,7 @@ class TourService {
                         name: true,
                         city: true,
                         country: true,
+                        continent: true,
                     }
                 },
                 tourCategories: {
@@ -60,6 +61,7 @@ class TourService {
                         name: true,
                         city: true,
                         country: true,
+                        continent: true,
                     }
                 },
                 tourCategories: {
@@ -112,6 +114,7 @@ class TourService {
                         name: true,
                         city: true,
                         country: true,
+                        continent: true,
                     }
                 },
                 tourCategories: {

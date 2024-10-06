@@ -20,6 +20,7 @@ model Destination {
   name      String
   country   String?
   city      String?
+  continent String?
   createdAt DateTime @default(now())
   tours     Tour[]
 }

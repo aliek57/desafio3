@@ -19,6 +19,7 @@ type Destination = {
     name: string;
     city: string;
     country: string;
+    continent: string;
 }
 
 type Tour = {
@@ -52,7 +53,6 @@ const ToursPackage = () => {
         const fetchTours = async () => {
             try {
                 const response = await axios.get<Tour[]>('http://localhost:3333/tours/')
-                console.log('Fetched Tours:', response.data)
                 setTours(response.data)
                 setFilteredTours(response.data)
                 setMaxPrice(Math.max(...response.data.map(tour => tour.price)))
@@ -89,17 +89,14 @@ const ToursPackage = () => {
             [...selectedCategories, categoryId];
         
         setSelectedCategories(newSelectedCategories);
-        console.log('Selected Categories:', newSelectedCategories)
 
         if (newSelectedCategories.length > 0) {
             const filtered = tours.filter(tour => {
-                console.log('Tour Categories:', tour.tourCategories)
                 return tour.tourCategories && Array.isArray(tour.tourCategories) && 
                     newSelectedCategories.some(id => 
                         tour.tourCategories.some(cat => cat.category.id === id)
                 )
             });
-            console.log('Filtered Tours:', filtered)
             setFilteredTours(filtered);
         } else {
             setFilteredTours(tours);
