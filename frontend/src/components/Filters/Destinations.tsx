@@ -15,7 +15,11 @@ interface Tour {
     destination: Destination;
 }
 
-const Destinations: React.FC = () => {
+interface DestinationsProps {
+    onDestination: (destinationName: string) => void;
+}
+
+const Destinations: React.FC<DestinationsProps> = ({ onDestination }) => {
     const [destinations, setDestinations] = useState<Destination[]>([]);
     const [error, setError] = useState<string | null>(null);
 
@@ -23,7 +27,6 @@ const Destinations: React.FC = () => {
         const fetchDestinations = async () => {
             try {
                 const response = await axios.get<Tour[]>('http://localhost:3333/tours/');
-                console.log("fetched tours: ", response.data)
                 const destinationData = response.data.map(tour => ({
                     id: tour.id,
                     name: tour.destination.name,
@@ -31,7 +34,7 @@ const Destinations: React.FC = () => {
                     city: tour.destination.city,
                     continent: tour.destination.continent,
                 }));
-
+                console.log('Destinations: ',destinationData)
                 setDestinations(destinationData);
             } catch (error) {
                 setError('Failed to fetch.');
@@ -51,6 +54,10 @@ const Destinations: React.FC = () => {
         return acc;
     }, {});
 
+    const handleDestinationSelected = (country: string) => {
+        onDestination(country);
+    }
+
   return (
     <div className='mb-3 filter'>
         <h4 className='filterTitle'>Destinations</h4>
@@ -65,6 +72,7 @@ const Destinations: React.FC = () => {
                                 key={index}
                                 type='checkbox'
                                 label={country}
+                                onChange={() => handleDestinationSelected(country)}
                             />
                         ))
                     ) : 

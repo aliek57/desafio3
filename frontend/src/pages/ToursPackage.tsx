@@ -14,6 +14,7 @@ import Destinations from '../components/Filters/Destinations';
 import Reviews from '../components/Filters/Reviews';
 import { BiSortAlt2 } from 'react-icons/bi';
 import CardItem from '../components/CardItem';
+import ReactPaginate from 'react-paginate';
 
 type Destination = {
     name: string;
@@ -43,6 +44,9 @@ const ToursPackage = () => {
     const [maxPrice, setMaxPrice] = useState<number>(0);
     const [minPrice, setMinPrice] = useState<number>(0);
     const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+    const [selectedDestinations, setSelectedDestinations] = useState<string[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(0);
+    const toursPerPage = 6;
 
     const getSearchTerm = () => {
         const params = new URLSearchParams(location.search);
@@ -103,6 +107,21 @@ const ToursPackage = () => {
         }
     }
 
+    const handleDestination = (destinationName: string) => {
+        const newSelectedDestinations = 
+            selectedDestinations.includes(destinationName) ?
+            selectedDestinations.filter(name => name !== destinationName) :
+            [...selectedDestinations, destinationName];
+        
+        setSelectedDestinations(newSelectedDestinations);
+
+        const filtered = tours.filter(tour => 
+            newSelectedDestinations.length === 0 || newSelectedDestinations.includes(tour.destination.country)
+        )
+
+        setFilteredTours(filtered);
+    }
+
     useEffect(() => {
         let updatedTours = [...tours];
 
@@ -123,8 +142,22 @@ const ToursPackage = () => {
             )
         }
 
+        if (selectedDestinations.length > 0) {
+            updatedTours = updatedTours.filter(tour => 
+                selectedDestinations.includes(tour.destination.name)
+            )
+        }
         setFilteredTours(updatedTours);
-    }, [location.search, tours, selectedCategories]);
+    }, [location.search, tours, selectedCategories, selectedDestinations]);
+
+    const indexOfLastTour = (currentPage + 1) * toursPerPage;
+    const indexOfFirstTour = indexOfLastTour - toursPerPage;
+    const currentTours = filteredTours.slice(indexOfFirstTour, indexOfLastTour);
+    const pageCount = Math.ceil(filteredTours.length / toursPerPage);
+
+    const handlePageClick = ({selected}: { selected: number}) => {
+        setCurrentPage(selected);
+    }
 
     useEffect(() => {
         const sortTours = () => {
@@ -182,7 +215,7 @@ const ToursPackage = () => {
                             <Search onSearch={handleSearch}/>
                             <Price maxTourPrice={maxPrice} minTourPrice={minPrice} onPrice={handlePrice}/>
                             <Categories onCategory={handleCategory}/>
-                            <Destinations/>
+                            <Destinations onDestination={handleDestination}/>
                             <Reviews/>
                         </Col>
                         <Col>
@@ -200,8 +233,8 @@ const ToursPackage = () => {
                             </div>
                         </div>
                         <div className="tourResult">
-                            {filteredTours.length === 0 && <p className='notFound'>No tours found.</p>}
-                            {filteredTours.map(tour => (
+                            {currentTours.length === 0 && <p className='notFound'>No tours found.</p>}
+                            {currentTours.map(tour => (
                                 <CardItem
                                 key={tour.id}
                                 id={tour.id}
@@ -214,6 +247,19 @@ const ToursPackage = () => {
                               />
                             ))}
                         </div>
+                        <ReactPaginate
+                            previousLabel={"<"}
+                            nextLabel={">"}
+                            breakLabel={"..."}
+                            breakClassName={"break-me"}
+                            pageCount={pageCount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={3}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination"}
+                            subContainerClassName={"pages pagination"}
+                            activeClassName={"active"}
+                        />
                         </Col>
                     </Row>
                 </Container>
