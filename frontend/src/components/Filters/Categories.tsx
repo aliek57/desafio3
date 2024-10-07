@@ -6,9 +6,14 @@ interface CategoryProps {
   name: string;
 }
 
-const Categories: React.FC = () => {
+interface CategoriesProps {
+  onCategory: (categoryId: number) => void;
+}
+
+const Categories: React.FC<CategoriesProps> = ({ onCategory }) => {
   const [categories, setCateogires] = useState<CategoryProps[]>([]);
     const [error, setError] = useState<string | null>(null);
+
     useEffect(() => {
         const fetchCateogires = async () => {
             try {
@@ -21,6 +26,11 @@ const Categories: React.FC = () => {
 
         fetchCateogires();
     }, []);
+
+    const handleCategorySelected = (categoryId: number) => {
+      onCategory(categoryId);
+    };
+
   return (
     <div className='mb-3 filter'>
         <h4 className='filterTitle'>Categories</h4>
@@ -29,9 +39,10 @@ const Categories: React.FC = () => {
           {categories.map(category => (
               <Form.Check
                   key={category.id}
-                  id={category.id}
+                  id={`category-${category.id}`}
                   type='checkbox'
                   label={category.name}
+                  onChange = {() => handleCategorySelected(category.id)}
               />
           ))}
         </Form>

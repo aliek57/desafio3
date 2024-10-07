@@ -14,12 +14,13 @@ import Destinations from '../components/Filters/Destinations';
 import Reviews from '../components/Filters/Reviews';
 import { BiSortAlt2 } from 'react-icons/bi';
 import CardItem from '../components/CardItem';
-// import ReactPaginate from 'react-paginate';
+import ReactPaginate from 'react-paginate';
 
 type Destination = {
     name: string;
     city: string;
     country: string;
+    continent: string;
 }
 
 type Tour = {
@@ -32,22 +33,20 @@ type Tour = {
     location?: string;
     rating?: number;
     reviews?: number;
+    tourCategories: { category: { id: number; name: string; }}[];
 }
 
 const ToursPackage = () => {
-    // const [currentPage, setCurrentPage] = useState(0);
-
-    // const itemsPerPage = 9;
-    // const offset = currentPage * itemsPerPage;
-    // const currentItems = filteredMovies.slice(offset, offset + itemsPerPage);
-    // const pageCount = Math.ceil(filteredMovies.length / itemsPerPage);
-
-    // const handlePageClick = ({ selected }) => {
-    //     setCurrentPage(selected);
-    // };
     const location = useLocation()
     const [tours, setTours] = useState<Tour[]>([])
     const [filteredTours, setFilteredTours] = useState<Tour[]>([])
+    const [sortOp, setSortOp] = useState<string>('');
+    const [maxPrice, setMaxPrice] = useState<number>(0);
+    const [minPrice, setMinPrice] = useState<number>(0);
+    const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
+    const [selectedDestinations, setSelectedDestinations] = useState<string[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(0);
+    const toursPerPage = 6;
 
     const getSearchTerm = () => {
         const params = new URLSearchParams(location.search);
@@ -60,22 +59,136 @@ const ToursPackage = () => {
                 const response = await axios.get<Tour[]>('http://localhost:3333/tours/')
                 setTours(response.data)
                 setFilteredTours(response.data)
+                setMaxPrice(Math.max(...response.data.map(tour => tour.price)))
+                setMinPrice(Math.min(...response.data.map(tour => tour.price)))
             } catch (error) {
                 console.error('Error fetching tours:', error)
             }
         }
         fetchTours()
-    }, [])
+    }, []);
+
+    const handleSearch = (searchTerm: string) => {
+        if (searchTerm) {
+            const filtered = tours.filter(tour => 
+                tour.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                tour.destination.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                tour.destination.country.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredTours(filtered);
+        } else {
+            setFilteredTours(tours);
+        }
+    }
+
+    const handlePrice = (minPrice: number, maxPrice: number) => {
+        const filtered = tours.filter(tour => tour.price >= minPrice && tour.price <= maxPrice);
+        setFilteredTours(filtered);
+    }
+
+    const handleCategory = (categoryId: number) => {
+        const newSelectedCategories = 
+            selectedCategories.includes(categoryId) ?
+            selectedCategories.filter(id => id !== categoryId) :
+            [...selectedCategories, categoryId];
+        
+        setSelectedCategories(newSelectedCategories);
+
+        if (newSelectedCategories.length > 0) {
+            const filtered = tours.filter(tour => {
+                return tour.tourCategories && Array.isArray(tour.tourCategories) && 
+                    newSelectedCategories.some(id => 
+                        tour.tourCategories.some(cat => cat.category.id === id)
+                )
+            });
+            setFilteredTours(filtered);
+        } else {
+            setFilteredTours(tours);
+        }
+    }
+
+    const handleDestination = (destinationName: string) => {
+        const newSelectedDestinations = 
+            selectedDestinations.includes(destinationName) ?
+            selectedDestinations.filter(name => name !== destinationName) :
+            [...selectedDestinations, destinationName];
+        
+        setSelectedDestinations(newSelectedDestinations);
+
+        const filtered = tours.filter(tour => 
+            newSelectedDestinations.length === 0 || newSelectedDestinations.includes(tour.destination.country)
+        )
+
+        setFilteredTours(filtered);
+    }
 
     useEffect(() => {
-        const searchTerm = getSearchTerm()
-        console.log('search term:', searchTerm)
-        const filteredTours = tours.filter(tour => 
-            tour.destination.name.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        console.log('filtered tour: ', filteredTours)
-            setFilteredTours(filteredTours)
-    }, [location.search, tours])
+        let updatedTours = [...tours];
+
+        const searchTerm = getSearchTerm();
+        if (searchTerm) {
+            updatedTours = updatedTours.filter(tour =>
+                tour.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                tour.destination.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                tour.destination.country.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+        }
+
+        if (selectedCategories.length > 0) {
+            updatedTours = updatedTours.filter(tour => 
+                tour.tourCategories && selectedCategories.some(id => 
+                    tour.tourCategories.some(cat => cat.category.id === id)
+                )
+            )
+        }
+
+        if (selectedDestinations.length > 0) {
+            updatedTours = updatedTours.filter(tour => 
+                selectedDestinations.includes(tour.destination.name)
+            )
+        }
+        setFilteredTours(updatedTours);
+    }, [location.search, tours, selectedCategories, selectedDestinations]);
+
+    const indexOfLastTour = (currentPage + 1) * toursPerPage;
+    const indexOfFirstTour = indexOfLastTour - toursPerPage;
+    const currentTours = filteredTours.slice(indexOfFirstTour, indexOfLastTour);
+    const pageCount = Math.ceil(filteredTours.length / toursPerPage);
+
+    const handlePageClick = ({selected}: { selected: number}) => {
+        setCurrentPage(selected);
+    }
+
+    useEffect(() => {
+        const sortTours = () => {
+            if (filteredTours.length > 0) {
+                const sortedTours = [...filteredTours];
+            
+                switch (sortOp) {
+                    case 'title':
+                        sortedTours.sort((a, b) => a.title.localeCompare(b.title));
+                        break;
+                    case 'price':
+                        sortedTours.sort((a, b) => a.price - b.price);
+                        break;
+                    case 'rating':
+                        // sortedTours.sort((a, b) => a.rating - b.rating);
+                        break;
+                    case 'category':
+                        sortedTours.sort((a, b) => a.destination.name.localeCompare(b.destination.name));
+                        break;
+                    default:
+                        break;
+                }
+                setFilteredTours(sortedTours);
+                }
+        }
+        sortTours();
+    }, [sortOp, filteredTours]);
+
+    const handleSortOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSortOp(e.target.value);
+    }
   return (
     <div className='packageContainer'>
         <TopNav/>
@@ -99,19 +212,19 @@ const ToursPackage = () => {
                 <Container>
                     <Row>
                         <Col sm={3}>
-                            <Search/>
-                            <Price/>
-                            <Categories/>
-                            <Destinations/>
+                            <Search onSearch={handleSearch}/>
+                            <Price maxTourPrice={maxPrice} minTourPrice={minPrice} onPrice={handlePrice}/>
+                            <Categories onCategory={handleCategory}/>
+                            <Destinations onDestination={handleDestination}/>
                             <Reviews/>
                         </Col>
                         <Col>
                         <div className='s2-top'>
-                            <p className="totalTours">16 Tours</p>
+                            <p className="totalTours">{filteredTours.length} Tours</p>
                             <div className='ordering'>
                                 <p>Sort by</p>
                                 <BiSortAlt2 className='ordering-icon'/>
-                                <select>
+                                <select value={sortOp} onChange={handleSortOption}>
                                     <option value="title">Title</option>
                                     <option value="price">Price</option>
                                     <option value="rating">Rating</option>
@@ -120,53 +233,33 @@ const ToursPackage = () => {
                             </div>
                         </div>
                         <div className="tourResult">
-                            {/* <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem /> */}
-                            {filteredTours.map(tour => (
+                            {currentTours.length === 0 && <p className='notFound'>No tours found.</p>}
+                            {currentTours.map(tour => (
                                 <CardItem
                                 key={tour.id}
                                 id={tour.id}
                                 title={tour.title}
                                 price={tour.price}
                                 durationDays={tour.durationDays}
-                                location={tour.location}
+                                destination={tour.destination}
                                 rating={tour.rating}
                                 reviews={tour.reviews}
                               />
                             ))}
-                            {/* <div className={styles.paginate}>
-                            <ReactPaginate
-                                previousLabel={">"}
-                                nextLabel={"<"}
-                                breakLabel={"..."}
-                                breakClassName={"break-me"}
-                                pageCount={pageCount}
-                                marginPagesDisplayed={2}
-                                pageRangeDisplayed={3}
-                                onPageChange={handlePageClick}
-                                containerClassName={styles.pagination}
-                                subContainerClassName={"pages pagination"}
-                                activeClassName={styles.active}
-                                previousClassName={
-                                    currentPage === 0
-                                        ? `${styles.previous} ${styles.disabled}`
-                                        : styles.previous
-                                }
-                                nextClassName={
-                                    currentPage === pageCount - 1
-                                        ? `${styles.next} ${styles.disabled}`
-                                        : styles.next
-                                }
-                            />
-                        </div> */}
                         </div>
+                        <ReactPaginate
+                            previousLabel={"<"}
+                            nextLabel={">"}
+                            breakLabel={"..."}
+                            breakClassName={"break-me"}
+                            pageCount={pageCount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={3}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination"}
+                            subContainerClassName={"pages pagination"}
+                            activeClassName={"active"}
+                        />
                         </Col>
                     </Row>
                 </Container>

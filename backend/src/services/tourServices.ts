@@ -18,12 +18,14 @@ class TourService {
                         name: true,
                         city: true,
                         country: true,
+                        continent: true,
                     }
                 },
                 tourCategories: {
                     select: {
                         category: {
                             select: {
+                                id: true,
                                 name: true
                             }
                         }
@@ -59,12 +61,14 @@ class TourService {
                         name: true,
                         city: true,
                         country: true,
+                        continent: true,
                     }
                 },
                 tourCategories: {
                     select: {
                         category: {
                             select: {
+                                id: true,
                                 name: true
                             }
                         }
@@ -110,6 +114,7 @@ class TourService {
                         name: true,
                         city: true,
                         country: true,
+                        continent: true,
                     }
                 },
                 tourCategories: {
