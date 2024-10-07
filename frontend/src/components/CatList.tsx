@@ -7,9 +7,13 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
+interface Tour {
+  price: number;
+}
 interface CategoryProps {
     id: number;
     name: string;
+    tours: Tour[];
 }
 
 const CatList: React.FC = () => {
@@ -50,6 +54,7 @@ const CatList: React.FC = () => {
                 key={category.id}
                 id={category.id}
                 name={category.name}
+                tours={category.tours}
               />
             </SwiperSlide>
           ))}

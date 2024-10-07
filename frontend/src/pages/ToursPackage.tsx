@@ -126,6 +126,13 @@ const ToursPackage = () => {
         let updatedTours = [...tours];
 
         const searchTerm = getSearchTerm();
+        const categoryParam = new URLSearchParams(location.search).get('category');
+
+        if(categoryParam) {
+            const categoryId = Number(categoryParam);
+            handleCategory(categoryId);
+        }
+
         if (searchTerm) {
             updatedTours = updatedTours.filter(tour =>
                 tour.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
