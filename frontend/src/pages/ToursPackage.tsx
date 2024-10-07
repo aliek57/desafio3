@@ -259,6 +259,17 @@ const ToursPackage = () => {
                             containerClassName={"pagination"}
                             subContainerClassName={"pages pagination"}
                             activeClassName={"active"}
+                            previousClassName={
+                                currentPage === 0
+                                    ? "previous disabled"
+                                    : "previous"
+                            }
+                            nextClassName={
+                                currentPage === pageCount - 1
+                                    ? "next disabled"
+                                    : "next"
+                            }
+                            disabledClassName={"disabled"}
                         />
                         </Col>
                     </Row>
