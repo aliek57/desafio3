@@ -49,12 +49,17 @@ const TourList: React.FC = () => {
       slidesPerView={4}
       autoplay={{ 
         delay: 800,
-        disableOnInteraction: false
+        disableOnInteraction: true,
+        pauseOnMouseEnter: true,
       }}
       pagination= {{ 
         clickable: true }}
       modules={[Autoplay, Pagination]}
       className='carrossel'
+      onSwiper={(swiper) => {
+        swiper.el.addEventListener('mouseenter', () => swiper.autoplay.stop());
+        swiper.el.addEventListener('mouseleave', () => swiper.autoplay.start());
+      }}
     >
       <Container className='list'>
         {error && <p>{error}</p>}

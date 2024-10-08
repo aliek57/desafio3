@@ -566,6 +566,11 @@
   height: 75vh;
 }
 
+.carrossel2 {
+  width: 100%;
+  height: 40vh;
+}
+
 .swiper-pagination-bullet-active {
   background-color: #FC5056 !important;
 }
@@ -1001,46 +1006,9 @@
 .previous.disabled:hover, 
 .next.disabled:hover {
  background-color: transparent;
- /* cursor: not-allowed; */
-}
-
-/* .pagination a {
-  text-decoration: none;
-  color: #A9AFBB !important;
-  padding: 0.3rem 0.5rem;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-} */
-
-/* .previous:hover,
-.next:hover {
-  background-color: #F0F0F0;
-} */
-
-/*
-
-.disabled {
-  cursor: not-allowed;
-  color: #A9AFBB;
-  opacity: 0.5;
-}
-
-.pagination a,
-.pagination button {
-  text-decoration: none;
-  color: #A9AFBB !important;
-  padding: 0.3rem 0.5rem;
-  border-radius: 50%;
-  transition: background-color 0.3s;
-}
-
-.pagination a:hover,
-.pagination button:hover {
-  background-color: #FC5056;
-  color: #ffffff;
 }
 
 .break-me {
   padding: 0.5em 1rem;
   color: #FC5056;
-} */
+} 

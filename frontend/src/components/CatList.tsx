@@ -39,12 +39,17 @@ const CatList: React.FC = () => {
       slidesPerView={4}
       autoplay={{ 
         delay: 800,
-        disableOnInteraction: false
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
       }}
       pagination= {{ 
         clickable: true }}
       modules={[Autoplay, Pagination]}
-      className='carrossel'
+      className='carrossel2'
+      onSwiper={(swiper) => {
+        swiper.el.addEventListener('mouseenter', () => swiper.autoplay.stop());
+        swiper.el.addEventListener('mouseleave', () => swiper.autoplay.start());
+      }}
     >
       <Container>
         {error && <p>{error}</p>}

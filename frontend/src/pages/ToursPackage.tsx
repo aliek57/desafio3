@@ -47,11 +47,12 @@ const ToursPackage = () => {
     const [selectedDestinations, setSelectedDestinations] = useState<string[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(0);
     const toursPerPage = 6;
-
+    
     const getSearchTerm = () => {
         const params = new URLSearchParams(location.search);
         return params.get('search') || '';
     }
+    const searchTerm = getSearchTerm();
 
     useEffect(() => {
         const fetchTours = async () => {
@@ -240,8 +241,8 @@ const ToursPackage = () => {
                             </div>
                         </div>
                         <div className="tourResult">
-                            {currentTours.length === 0 && <p className='notFound'>No tours found.</p>}
-                            {currentTours.map(tour => (
+                            {currentTours.length === 0 && searchTerm ? (<p className='notFound'>No tours found.</p>) :
+                           ( currentTours.map(tour => (
                                 <CardItem
                                 key={tour.id}
                                 id={tour.id}
@@ -252,7 +253,7 @@ const ToursPackage = () => {
                                 rating={tour.rating}
                                 reviews={tour.reviews}
                               />
-                            ))}
+                            )))}
                         </div>
                         <ReactPaginate
                             previousLabel={"<"}
