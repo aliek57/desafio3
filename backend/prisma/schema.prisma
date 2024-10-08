@@ -56,14 +56,13 @@ model TourCategory {
 
 model Review {
   id              Int      @id @default(autoincrement())
-  rating          Int
   servicesRating  Int
   locationsRating Int
   amenitiesRating Int
   pricesRating    Int
   roomRating      Int
   comment        String?
-  isAnonymous     Boolean  @default(false)
+  isAnonymous     Boolean?  @default(false)
   createdAt      DateTime @default(now())
   userId         String?
   tourId         Int
