@@ -7,6 +7,7 @@ import Home from './pages/Home/Home';
 import ErrorPage from './pages/ErrorPage';
 import AnotherErrorPage from './pages/AnotherErrorPage';
 import ToursPackage from './pages/ToursPackage';
+import TourDetails from './pages/TourDetails';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="tours" element={<ToursPackage />} />
+        <Route path="details" element={<TourDetails/>}/>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/error" element={<ErrorPage />}/>
