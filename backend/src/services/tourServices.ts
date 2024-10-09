@@ -30,7 +30,26 @@ class TourService {
                             }
                         }
                     }
-                } 
+                },
+                reviews: {
+                    select: {
+                        id: true,
+                        servicesRating: true,
+                        locationsRating: true,
+                        amenitiesRating: true,
+                        pricesRating: true,
+                        roomRating: true,
+                        comment: true,
+                        isAnonymous: true,
+                        user: {
+                            select: {
+                                firebaseUid: true,
+                                name: true,
+                                email: true,
+                            }
+                        }, 
+                    }
+                }
             },
         });
 
@@ -73,7 +92,26 @@ class TourService {
                             }
                         }
                     }
-                } 
+                },
+                reviews: {
+                    select: {
+                        id: true,
+                        servicesRating: true,
+                        locationsRating: true,
+                        amenitiesRating: true,
+                        pricesRating: true,
+                        roomRating: true,
+                        comment: true,
+                        isAnonymous: true,
+                        user: {
+                            select: {
+                                firebaseUid: true,
+                                name: true,
+                                email: true,
+                            }
+                        }, 
+                    }
+                }
             },
         });
 
@@ -125,7 +163,26 @@ class TourService {
                             }
                         }
                     }
-                } 
+                },
+                reviews: {
+                    select: {
+                        id: true,
+                        servicesRating: true,
+                        locationsRating: true,
+                        amenitiesRating: true,
+                        pricesRating: true,
+                        roomRating: true,
+                        comment: true,
+                        isAnonymous: true,
+                        user: {
+                            select: {
+                                firebaseUid: true,
+                                name: true,
+                                email: true,
+                            }
+                        }, 
+                    }
+                }
             },
         });
 

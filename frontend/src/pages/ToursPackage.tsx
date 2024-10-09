@@ -23,16 +23,28 @@ type Destination = {
     continent: string;
 }
 
+type Review = {
+    id: number;
+    servicesRating: number;
+    locationsRating: number;
+    amenitiesRating: number;
+    pricesRating: number;
+    roomRating: number;
+    comment?: string;
+    isAnonymous?: boolean;
+    tour: {
+      id: number;
+      title: string;
+    }
+  }
+
 type Tour = {
     id: number,
     destination: Destination;
     title: string;
-    description?: string;
     price: number;
     durationDays: number;
-    location?: string;
-    rating?: number;
-    reviews?: number;
+    reviews: Review[];
     tourCategories: { category: { id: number; name: string; }}[];
 }
 
@@ -45,8 +57,25 @@ const ToursPackage = () => {
     const [minPrice, setMinPrice] = useState<number>(0);
     const [selectedCategories, setSelectedCategories] = useState<number[]>([]);
     const [selectedDestinations, setSelectedDestinations] = useState<string[]>([]);
+    const [selectedRating, setSelectedRating] = useState<number | null>(null);
     const [currentPage, setCurrentPage] = useState<number>(0);
     const toursPerPage = 6;
+
+    const getRating = (tour: Tour) => {
+        if(tour.reviews.length === 0) return 0;
+        const rating = tour.reviews.reduce((acc, review) => {
+            const reviewAverage = (
+                review.servicesRating +
+                review.locationsRating +
+                review.amenitiesRating +
+                review.pricesRating +
+                review.roomRating
+            ) / 5
+            return acc + reviewAverage;
+        }, 0)
+
+        return parseFloat((rating / tour.reviews.length).toFixed(1));
+    }
     
     const getSearchTerm = () => {
         const params = new URLSearchParams(location.search);
@@ -58,6 +87,7 @@ const ToursPackage = () => {
         const fetchTours = async () => {
             try {
                 const response = await axios.get<Tour[]>('http://localhost:3333/tours/')
+                console.log("fetched tours: ", response.data)
                 setTours(response.data)
                 setFilteredTours(response.data)
                 setMaxPrice(Math.max(...response.data.map(tour => tour.price)))
@@ -94,14 +124,11 @@ const ToursPackage = () => {
             [...selectedCategories, categoryId];
         
         setSelectedCategories(newSelectedCategories);
-
         if (newSelectedCategories.length > 0) {
-            const filtered = tours.filter(tour => {
-                return tour.tourCategories && Array.isArray(tour.tourCategories) && 
-                    newSelectedCategories.some(id => 
-                        tour.tourCategories.some(cat => cat.category.id === id)
-                )
-            });
+            const filtered = tours.filter(tour =>
+                tour.tourCategories && Array.isArray(tour.tourCategories) && 
+                tour.tourCategories.some(cat => newSelectedCategories.includes(cat.category.id))
+            );
             setFilteredTours(filtered);
         } else {
             setFilteredTours(tours);
@@ -121,6 +148,14 @@ const ToursPackage = () => {
         )
 
         setFilteredTours(filtered);
+    }
+
+    const handleReview = (rating: number) => {
+        if(selectedRating === rating) {
+            setSelectedRating(null);
+        } else {
+            setSelectedRating(rating);
+        }
     }
 
     useEffect(() => {
@@ -155,8 +190,12 @@ const ToursPackage = () => {
                 selectedDestinations.includes(tour.destination.name)
             )
         }
+
+        if (selectedRating) {
+            updatedTours = updatedTours.filter(tour => getRating(tour) >= selectedRating)
+        }
         setFilteredTours(updatedTours);
-    }, [location.search, tours, selectedCategories, selectedDestinations]);
+    }, [location.search, tours, selectedCategories, selectedDestinations, selectedRating]);
 
     const indexOfLastTour = (currentPage + 1) * toursPerPage;
     const indexOfFirstTour = indexOfLastTour - toursPerPage;
@@ -180,10 +219,14 @@ const ToursPackage = () => {
                         sortedTours.sort((a, b) => a.price - b.price);
                         break;
                     case 'rating':
-                        // sortedTours.sort((a, b) => a.rating - b.rating);
+                        sortedTours.sort((a, b) => getRating(b) - getRating(a));
                         break;
                     case 'category':
-                        sortedTours.sort((a, b) => a.destination.name.localeCompare(b.destination.name));
+                        sortedTours.sort((a, b) => {
+                            const catA = a.tourCategories.length > 0 ? a.tourCategories[0].category.name : '';
+                            const catB = b.tourCategories.length > 0? b.tourCategories[0].category.name : '';
+                            return catA.localeCompare(catB);
+                        });
                         break;
                     default:
                         break;
@@ -224,7 +267,7 @@ const ToursPackage = () => {
                             <Price maxTourPrice={maxPrice} minTourPrice={minPrice} onPrice={handlePrice}/>
                             <Categories onCategory={handleCategory}/>
                             <Destinations onDestination={handleDestination}/>
-                            <Reviews/>
+                            <Reviews onReview={handleReview}/>
                         </Col>
                         <Col>
                         <div className='s2-top'>
@@ -241,17 +284,17 @@ const ToursPackage = () => {
                             </div>
                         </div>
                         <div className="tourResult">
-                            {currentTours.length === 0 && searchTerm ? (<p className='notFound'>No tours found.</p>) :
+                            {currentTours.length === 0 ? (<p className='notFound'>No tours found.</p>) :
                            ( currentTours.map(tour => (
                                 <CardItem
-                                key={tour.id}
-                                id={tour.id}
-                                title={tour.title}
-                                price={tour.price}
-                                durationDays={tour.durationDays}
-                                destination={tour.destination}
-                                rating={tour.rating}
-                                reviews={tour.reviews}
+                                    key={tour.id}
+                                    id={tour.id}
+                                    title={tour.title}
+                                    price={tour.price}
+                                    durationDays={tour.durationDays}
+                                    destination={tour.destination}
+                                    rating={tour.rating}
+                                    reviews={tour.reviews}
                               />
                             )))}
                         </div>

@@ -13,6 +13,21 @@ type Destination = {
   country: string;
 }
 
+type Review = {
+  id: number;
+  servicesRating: number;
+  locationsRating: number;
+  amenitiesRating: number;
+  pricesRating: number;
+  roomRating: number;
+  comment?: string;
+  isAnonymous?: boolean;
+  tour: {
+    id: number;
+    title: string;
+  }
+}
+
 type Tour = {
   id: number,
   destination: Destination;
@@ -21,7 +36,7 @@ type Tour = {
   price: number;
   durationDays: number;
   rating?: number;
-  reviews?: number;
+  reviews: Review[];
 }
 
 const TourList: React.FC = () => {
@@ -71,7 +86,6 @@ const TourList: React.FC = () => {
                 price={tour.price}
                 destination={tour.destination}
                 durationDays={tour.durationDays}
-                rating={tour.rating}
                 reviews={tour.reviews}
               />
             </SwiperSlide>
