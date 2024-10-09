@@ -41,8 +41,8 @@ type Tour = {
 
 const TourList: React.FC = () => {
     const [tours, setTours] = useState<Tour[]>([]);
-
     const [error, setError] = useState<string | null>(null);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -56,6 +56,16 @@ const TourList: React.FC = () => {
 
         fetchData();
     }, []);
+
+    const popularTours = tours
+      .filter(tour => tour.reviews.length > 0)
+      .sort((a, b) => {
+        const aRating = a.reviews.reduce((acc, review) => acc + ((review.servicesRating + review.locationsRating + review.amenitiesRating + review.pricesRating + review.roomRating)/5), 0) / a.reviews.length;
+        const bRating = b.reviews.reduce((acc, review) => acc + ((review.servicesRating + review.locationsRating + review.amenitiesRating + review.pricesRating + review.roomRating)/5), 0) / b.reviews.length;
+        return bRating - aRating;
+      })
+      .slice(0, 5);
+
   return (
     <Swiper
       direction='horizontal'
@@ -78,7 +88,7 @@ const TourList: React.FC = () => {
     >
       <Container className='list'>
         {error && <p>{error}</p>}
-          {tours.map(tour => (
+          {popularTours.map(tour => (
             <SwiperSlide key={tour.id}>
               <CardItem
                 id={tour.id}
