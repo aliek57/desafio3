@@ -52,9 +52,9 @@ const Footer: React.FC = () => {
                         <p className='mt-1'>exaample@trisog.com</p>
                     </div>
                     <div className="footer-socialIcons mb-2">
-                        <a href="#" className="me-1"> <CiFacebook/> </a>
-                        <a href="#" className="me-1"> <CiTwitter/> </a>
-                        <a href="#"> <CiLinkedin/> </a>
+                        <a href="https://www.facebook.com/" target="_blank" className="me-1"> <CiFacebook/> </a>
+                        <a href="https://media1.tenor.com/m/_6r0zVrSkEcAAAAd/alexandre-de-moraes-xand%C3%A3o.gif" target="_blank" className="me-1"> <CiTwitter/> </a>
+                        <a href="https://www.linkedin.com/" target="_blank"> <CiLinkedin/> </a>
                     </div>
                 </Col>
                 <Col md={5} className="footer-column footer-middle">
