@@ -13,6 +13,7 @@ class ReviewService {
                 roomRating: true,
                 comment: true,
                 isAnonymous: true,
+                createdAt: true,
                 user: {
                     select: {
                         firebaseUid: true,
@@ -48,6 +49,7 @@ class ReviewService {
                 roomRating: true,
                 comment: true,
                 isAnonymous: true,
+                createdAt: true,
                 user: {
                     select: {
                         firebaseUid: true,
@@ -87,6 +89,7 @@ class ReviewService {
                 roomRating: true,
                 comment: true,
                 isAnonymous: true,
+                createdAt: true,
                 user: {
                     select: {
                         firebaseUid: true,

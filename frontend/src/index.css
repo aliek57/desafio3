@@ -433,19 +433,6 @@
   margin: 20px 0;
 }
 
-.subtitle::before,
-.subtitle::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20%;
-  height: 1px;
-  background-color: #c5c5c5;
-  z-index: -1;
-}
-
 .title {
   font-weight: 800;
   margin-bottom: 1.2rem;
@@ -1327,6 +1314,10 @@
   padding: 2px 5px;
   color: #ffffff;
   border-radius: 5px;
+  font-size: 0.7rem;
+}
+
+.review .review-rating p {
   font-size: 0.8rem;
 }
 

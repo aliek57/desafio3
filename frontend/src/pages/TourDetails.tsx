@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import { toast } from 'react-toastify'
 import RelatedTours from '../components/RelatedTours'
+import ReviewList from '../components/ReviewList'
 
 type Destination = {
   name: string;
@@ -386,25 +387,7 @@ const TourDetails = () => {
             </div>
             <div className="showReviews mt-3 mb-3">
               <h5>Showing {tour.reviews.length} review</h5>
-              <div className="review mt-3 mb-3">
-                  <Row>
-                    <Col md={3} className='d-flex justify-content-center'>
-                      <img src="https://via.placeholder.com/80" alt="User" className='img-fluid userIcon' />
-                    </Col>
-                    <Col>
-                      <p className="review-date">March 20, 2022</p>
-                      <h5 className="userName mt-2">Sindy Simmons</h5>
-                      <div className="userStatus d-flex align-items-center">
-                        <div className="d-flex review-rating">
-                          <FaStar className="card-icon me-1"/>
-                          <p>4.8</p>
-                        </div>
-                        <p className='user-review mx-2'>15 reviews</p>
-                      </div>
-                      <p className="comment mt-2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati ipsam quod odio possimus dolor placeat aliquam repellendus aperiam officia esse magni ad laudantium, tenetur at, nisi iusto, molestias animi alias.</p>
-                    </Col>
-                  </Row>
-              </div>
+              <ReviewList tourId={tour.id}/>
             </div>
             <div className="addReview">
               <h5>Add a review</h5>
