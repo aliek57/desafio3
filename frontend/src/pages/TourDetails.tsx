@@ -7,7 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { IoLocationOutline, IoShareSocialOutline } from 'react-icons/io5'
 import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io'
 import { FaStar } from 'react-icons/fa'
-// import { CiCalendar } from 'react-icons/ci'
+import TourList from '../components/TourList'
+import StarRating from '../components/StarRating'
 
 const TourDetails = () => {
   const [isHeartHovered, setIsHeartHovered] = useState(false);
@@ -135,6 +136,172 @@ const TourDetails = () => {
                 </div>
               </form>
             </Col>
+        </Row>
+        <Row className='section2 mt-3 d-flex justify-content-center'>
+          <Col md={6}>
+            <div className="detailsOverview">
+              <h5 className="detailsSubtitle">Overview</h5>
+              <p className='mb-4'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit quidem tempora voluptates vel recusandae nemo nisi illo repellat animi numquam eligendi ratione omnis cum ut obcaecati voluptate doloremque, sed totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit adipisci laborum recusandae velit fuga vero optio exercitationem, quam accusamus eius corrupti nihil tempore quia possimus tenetur harum dolore doloribus? Dignissimos!</p>
+            </div>
+            <div className="detailsMap">
+              <h5 className="detailsSubtitle">Map</h5>
+              <img src="https://via.placeholder.com/700x400" alt="Map" className='img-fluid' />
+            </div>
+            <div className="detailsAverageReviews">
+              <h5 className="detailsSubtitle mt-4">Average Reviews</h5>
+              <div className="detailsRating">
+                <Row>
+                <Col md={4}>
+                    <div className="averageScore d-flex flex-column align-items-center justify-content-center">
+                      <h2>4.8</h2>
+                      <div className="scoreStatus d-flex align-items-center">
+                        <FaStar className='me-2' />
+                        <p>Excellent</p>
+                      </div>
+                    </div>
+                </Col>
+                <Col md={4}>
+                    <div className="averageCategories">
+                      <p className='averageTitle mb-1'>Services</p>
+                      <div className="bar mb-2 d-flex align-items-center">
+                        <input 
+                          type="range"
+                          readOnly
+                          className='progressRange' />
+                        <span className='ms-2'>4.0</span>
+                      </div>
+                    </div>
+                    <div className="averageCategories">
+                      <p className='averageTitle mb-1'>Locations</p>
+                      <div className="bar mb-2 d-flex align-items-center">
+                        <input 
+                          type="range"
+                          readOnly
+                          className='progressRange' />
+                        <span className='ms-2'>4.0</span>
+                      </div>
+                    </div>
+                    <div className="averageCategories">
+                      <p className='averageTitle mb-1'>Amenities</p>
+                      <div className="bar mb-2 d-flex align-items-center">
+                        <input 
+                          type="range"
+                          readOnly
+                          className='progressRange' />
+                        <span className='ms-2'>4.0</span>
+                      </div>
+                    </div>
+                </Col>
+                <Col md={4}>
+                    <div className="averageCategories">
+                      <p className='averageTitle mb-1'>Prices</p>
+                      <div className="bar mb-2 d-flex align-items-center">
+                        <input 
+                          type="range"
+                          readOnly
+                          className='progressRange' />
+                        <span className='ms-2'>4.0</span>
+                      </div>
+                    </div>
+                    <div className="averageCategories">
+                      <p className='averageTitle mb-1'>Food</p>
+                      <div className="bar mb-2 d-flex align-items-center">
+                        <input 
+                          type="range"
+                          readOnly
+                          className='progressRange' />
+                        <span className='ms-2'>4.0</span>
+                      </div>
+                    </div>
+                    <div className="averageCategories">
+                      <p className='averageTitle mb-1'>Room confort and quality</p>
+                      <div className="bar mb-2 d-flex align-items-center">
+                        <input 
+                          type="range"
+                          readOnly
+                          className='progressRange' />
+                        <span className='ms-2'>4.0</span>
+                      </div>
+                    </div>
+                </Col>
+                </Row>
+              </div>
+            </div>
+            <div className="showReviews mt-3 mb-3">
+              <h5>Showing 1 review</h5>
+              <div className="review">
+                  
+              </div>
+            </div>
+            <div className="addReview">
+              <h5>Add a review</h5>
+              <Row className='d-flex mb-4'>
+                <Col md={3}>
+                    <div className="reviewCategory mb-3">
+                      <p className="rc-title mb-1">Services</p>
+                      <StarRating/>
+                    </div>
+                </Col>
+                <Col md={3}>
+                    <div className="reviewCategory mb-2">
+                      <p className="rc-title mb-1">Locations</p>
+                      <StarRating/>
+                    </div>
+                </Col>
+                <Col md={3}>
+                    <div className="reviewCategory mb-2">
+                      <p className="rc-title mb-1">Amenities</p>
+                      <StarRating/>
+                    </div>
+                </Col>
+                <Col md={3}>
+                    <div className="reviewCategory mb-2">
+                      <p className="rc-title mb-1">Prices</p>
+                      <StarRating/>
+                    </div>
+                </Col>
+                <Col md={4}>
+                    <div className="reviewCategory mb-2">
+                      <p className="rc-title mb-1">Room comfort and quality</p>
+                      <StarRating/>
+                    </div>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={6}>
+                  <input 
+                  type='text' 
+                  className='form-control' 
+                  id='name' 
+                  placeholder='Your name'
+                  />
+                </Col>
+                <Col md={6}>
+                <input 
+                  type='email' 
+                  className='form-control' 
+                  id='name' 
+                  placeholder='Email address'
+                  />
+                </Col>
+              </Row>
+              <Col>
+                  <textarea 
+                  className='form-control mt-4' 
+                  id='message' 
+                  placeholder='Write your comment'
+                  />
+              </Col>
+              <div className='d-flex justify-content-start mt-4'>
+                <button type='submit' className='btn btn-danger'>Submit review</button>
+              </div>
+            </div>
+          </Col>
+          <Col md={3}></Col>
+          <div className="detailsCarrossel d-flex flex-column justify-content-center mt-4">
+            <h3 className='text-center'>You may also like...</h3>
+            <TourList/>
+          </div>
         </Row>
       </div>
       <Footer/>

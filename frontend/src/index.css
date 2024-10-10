@@ -1161,3 +1161,131 @@
 .detailsTicket .ticketBtn:hover {
   background-color: #F54336;
 }
+
+.detailsContent .detailsSubtitle {
+  font-weight: 700;
+  color: #051036;
+  margin-bottom: 1rem;
+}
+
+.detailsContent .detailsOverview p {
+  color: #676D85;
+  font-size: 0.9rem;
+}
+
+.detailsContent .detailsCarrossel h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #051036;
+}
+
+.detailsContent .detailsCarrossel{
+  padding: 2rem;
+}
+
+.detailsContent .detailsRating {
+  background-color: #F7F8FA;
+  padding: 2rem;
+}
+
+.detailsRating .averageScore {
+  background-color: #FC5056;
+  padding: 1rem;
+  color: #ffffff;
+  height: 100%;
+}
+
+.detailsRating .averageScore h2 {
+  font-size: 2.5rem;
+}
+
+.averageCategories .averageTitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #051036;
+}
+
+.averageCategories span {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.averageCategories .progressRange {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+  position: relative;
+  pointer-events: none;
+}
+
+.averageCategories .progressRange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0;
+  height: 0;
+}
+
+.averageCategories .progressRange::-moz-range-thumb {
+  width: 0;
+  height: 0;
+}
+
+.averageCategories .progressRange::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #FC5056 0%, #FC5056 var(--value), #ddd var(--value), #ddd 100%);
+}
+
+.addReview {
+  padding: 2rem;
+  background-color: #F7F8FA;
+}
+
+.addReview h5,
+.showReviews h5 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #051036;
+}
+
+.addReview .rc-title {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #676D85;
+}
+
+.addReview .form-control {
+  font-size: 0.9rem;
+  border: none;
+  padding: 0.8rem 0.5rem;
+}
+
+.addReview .btn {
+  background-color: #FC5056;
+  padding: 1rem 2rem;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.addReview .btn:hover {
+  background-color: #F54336;
+}
+
+.star-rating .star-label {
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.star-rating input[type=radio] {
+  display: none;
+}
+
+.star-rating .star {
+  font-size: 15px;
+  color: #A9AFBB;
+  transition: color 0.2s;
+}
+
+.star-rating .star.active {
+  color: #f1f52c;
+}
