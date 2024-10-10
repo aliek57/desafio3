@@ -134,25 +134,28 @@ const TourDetails = () => {
     const addKid = () => setKid(prev => prev + 1);
     const addChildren = () => setChildren(prev => prev + 1);
 
-    const subtract = () => {
-      let valid = false;
-
+    const subtractAdult = () => {
       if (adult > 0) {
         setAdult(prev => prev - 1);
-        valid = true;
+      } else {
+        toast.warning(`Number is already zero, can't subtract`);
       }
+    }
 
+    const subtractKid = () => {
       if (kid > 0) {
         setKid(prev => prev - 1);
-        valid = true;
+      } else {
+        toast.warning(`Number is already zero, can't subtract`);
       }
+    }
 
+    const subtractChildren = () => {
       if (children > 0) {
         setChildren(prev => prev - 1);
-        valid = true;
+      } else {
+        toast.warning(`Number is already zero, can't subtract`);
       }
-
-      if (!valid) toast.warning(`Number is already zero, can't subtract`);
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -256,7 +259,7 @@ const TourDetails = () => {
                       <div className='d-flex justify-content-between align-items-center mb-3'>
                         <p>Adults (+18 years)</p>
                         <div className='ticketCatBtn d-flex align-items-center'>
-                          <button type='button' onClick={subtract}>-</button>
+                          <button type='button' onClick={subtractAdult}>-</button>
                           <span className='ms-1'>{adult}</span>
                           <button type='button' className='ms-1' onClick={addAdult}>+</button>
                         </div>
@@ -266,7 +269,7 @@ const TourDetails = () => {
                       <div className='d-flex justify-content-between align-items-center mb-3'>
                         <p>Kids (+12 years)</p>
                         <div className='ticketCatBtn d-flex align-items-center'>
-                          <button type='button' onClick={subtract}>-</button>
+                          <button type='button' onClick={subtractKid}>-</button>
                           <span className='ms-1'>{kid}</span>
                           <button type='button' className='ms-1' onClick={addKid}>+</button>
                         </div>
@@ -276,7 +279,7 @@ const TourDetails = () => {
                       <div className='d-flex justify-content-between align-items-center mb-3'>
                         <p>Children (+3 years)</p>
                         <div className='ticketCatBtn d-flex align-items-center'>
-                          <button type='button' onClick={subtract}>-</button>
+                          <button type='button' onClick={subtractChildren}>-</button>
                           <span className='ms-1'>{children}</span>
                           <button type='button' className='ms-1' onClick={addChildren}>+</button>
                         </div>
