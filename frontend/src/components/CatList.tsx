@@ -7,9 +7,13 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
+interface Tour {
+  price: number;
+}
 interface CategoryProps {
     id: number;
     name: string;
+    tours: Tour[];
 }
 
 const CatList: React.FC = () => {
@@ -35,12 +39,17 @@ const CatList: React.FC = () => {
       slidesPerView={4}
       autoplay={{ 
         delay: 800,
-        disableOnInteraction: false
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
       }}
       pagination= {{ 
         clickable: true }}
       modules={[Autoplay, Pagination]}
-      className='carrossel'
+      className='carrossel2'
+      onSwiper={(swiper) => {
+        swiper.el.addEventListener('mouseenter', () => swiper.autoplay.stop());
+        swiper.el.addEventListener('mouseleave', () => swiper.autoplay.start());
+      }}
     >
       <Container>
         {error && <p>{error}</p>}
@@ -50,6 +59,7 @@ const CatList: React.FC = () => {
                 key={category.id}
                 id={category.id}
                 name={category.name}
+                tours={category.tours}
               />
             </SwiperSlide>
           ))}

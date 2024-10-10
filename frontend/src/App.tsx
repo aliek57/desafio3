@@ -7,14 +7,19 @@ import Home from './pages/Home/Home';
 import ErrorPage from './pages/ErrorPage';
 import AnotherErrorPage from './pages/AnotherErrorPage';
 import ToursPackage from './pages/ToursPackage';
+import TourDetails from './pages/TourDetails';
+import { ProtectedRoute } from './pages/ProtectedRoute/ProtectedRoute';
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
 
   return (
     <BrowserRouter>
+      <AuthProvider>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="tours" element={<ToursPackage />} />
+        <Route path="tours" element={<ProtectedRoute element={<ToursPackage/>} />} />
+        <Route path="/tours/:id" element={<ProtectedRoute element={<TourDetails/>} />}/>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/error" element={<ErrorPage />}/>
@@ -32,8 +37,8 @@ function App() {
         theme="colored"
         transition= {Bounce}
       />
+    </AuthProvider>
     </BrowserRouter>
-    
   )
 }
 

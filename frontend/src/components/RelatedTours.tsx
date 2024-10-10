@@ -39,31 +39,35 @@ type Tour = {
   reviews: Review[];
 }
 
-const TourList: React.FC = () => {
-    const [tours, setTours] = useState<Tour[]>([]);
+interface RTProps {
+    currentTourId: number;
+    category: string;
+}
+
+const RelatedTours: React.FC<RTProps> = ({ currentTourId, category }) => {
+    const [relatedTours, setRelatedTours] = useState<Tour[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             try {
-                const response = await axios.get<Tour[]>('http://localhost:3333/tours/');
-                setTours(response.data);
+                const response = await axios.get<Tour[]>(`http://localhost:3333/tours/category/${category}`);
+                setRelatedTours(response.data.filter(tour => tour.id !== currentTourId).slice(0, 5));
             } catch (error) {
                 setError('Failed to fetch tours.');
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchData();
-    }, []);
+    }, [currentTourId, category]);
 
-    const popularTours = tours
-      .filter(tour => tour.reviews.length > 0)
-      .sort((a, b) => {
-        const aRating = a.reviews.reduce((acc, review) => acc + ((review.servicesRating + review.locationsRating + review.amenitiesRating + review.pricesRating + review.roomRating)/5), 0) / a.reviews.length;
-        const bRating = b.reviews.reduce((acc, review) => acc + ((review.servicesRating + review.locationsRating + review.amenitiesRating + review.pricesRating + review.roomRating)/5), 0) / b.reviews.length;
-        return bRating - aRating;
-      })
-      .slice(0, 5);
+    if (loading) {
+        return <p className='text-center'>Loading related tours...</p>;
+    }
 
   return (
     <Swiper
@@ -86,22 +90,25 @@ const TourList: React.FC = () => {
       }}
     >
       <Container className='list'>
-        {error && <p>{error}</p>}
-          {popularTours.map(tour => (
-            <SwiperSlide key={tour.id}>
-              <CardItem
-                id={tour.id}
-                title={tour.title}
-                price={tour.price}
-                destination={tour.destination}
-                durationDays={tour.durationDays}
-                reviews={tour.reviews}
-              />
-            </SwiperSlide>
-          ))}
+        {error ? (
+            <p className="notFound text-center">{error}</p>
+        ) : (
+            relatedTours.map(tour => (
+                <SwiperSlide key={tour.id}>
+                  <CardItem
+                    id={tour.id}
+                    title={tour.title}
+                    price={tour.price}
+                    destination={tour.destination}
+                    durationDays={tour.durationDays}
+                    reviews={tour.reviews}
+                  />
+                </SwiperSlide>
+              ))
+        )}
       </Container>
     </Swiper>
   )
 }
 
-export default TourList;
+export default RelatedTours;

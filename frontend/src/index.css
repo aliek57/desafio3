@@ -75,6 +75,17 @@
   font-weight: 400;
 }
 
+.loginContainer .btnLogout {
+  color: #ffffff;
+  background-color: #FC5056;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.loginContainer.btnLogout:hover {
+  background-color: #FF3636;
+}
+
 /* Footer */
 
 .footer {
@@ -422,19 +433,6 @@
   margin: 20px 0;
 }
 
-.subtitle::before,
-.subtitle::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20%;
-  height: 1px;
-  background-color: #c5c5c5;
-  z-index: -1;
-}
-
 .title {
   font-weight: 800;
   margin-bottom: 1.2rem;
@@ -564,6 +562,11 @@
 .swiper {
   width: 100%;
   height: 75vh;
+}
+
+.carrossel2 {
+  width: 100%;
+  height: 40vh;
 }
 
 .swiper-pagination-bullet-active {
@@ -829,6 +832,11 @@
   z-index: 3;
 }
 
+.ticketInput .form-control {
+  padding: 0.5rem;
+  color: #A9AFBB !important;
+}
+
 .filter .searchIcon {
   position: absolute;
   top: 50%;
@@ -963,35 +971,353 @@
   margin: 20px 0;
 }
 
-.pagination li {
+.pagination li a {
   margin: 0 5px;
   font-size: 0.8rem;
-}
-
-.pagination a,
-.pagination button {
-  text-decoration: none;
   color: #A9AFBB;
+  text-decoration: none;
   padding: 0.3rem 0.5rem;
-  border: 1px solid #A9AFBB;
-  border-radius: 50%;
-  transition: background-color 0.3s;
 }
 
 .pagination a:hover,
 .pagination button:hover {
   background-color: #FC5056;
-  color: #ffffff;
+  color: #ffffff !important;
+  border-radius: 50%;
 }
 
-.pagination .active {
+.pagination .active,
+.pagination .active:hover {
   background-color: #FC5056;
-  color: #ffffff;
-  border: 1px solid #FC5056;
+  color: #ffffff !important;
   border-radius: 50%;
+}
+
+.previous a, 
+.next a{
+  color: #A9AFBB;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.previous.disabled a, 
+.next.disabled a {
+ background-color: #ffffff;
+ cursor: not-allowed;
+}
+
+.previous.disabled:hover, 
+.next.disabled:hover {
+ background-color: transparent;
 }
 
 .break-me {
   padding: 0.5em 1rem;
   color: #FC5056;
 }
+
+/* Tour Details */
+.detailsContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.detailsContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-bottom: 3rem;
+  padding: 1rem;
+}
+
+.detailsContent p {
+  margin: 0;
+}
+
+.detailsContent .first-row p {
+  color: #676D85;
+}
+
+.detailsContent p,
+.detailsContent strong {
+  font-size: 0.9rem;
+}
+
+.detailsContent .first-row a {
+  color: #FC5056;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.detailsContent .first-row a:hover {
+  font-weight: 600;
+}
+
+.detailsContent .first-row svg {
+  font-size: 20px;
+  color: #676D85;
+}
+
+.fr-icon svg:hover {
+  font-weight: 700;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.fr-icon .fr-heart:hover {
+  color: #FC5056;
+}
+
+.detailsContent .detailsTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color:#051036;
+}
+
+.detailsContent .second-row p {
+  color: #676D85;
+}
+
+.detailsContent .second-row .sr-star {
+  color: #FC5056;
+  font-size: 12px;
+}
+
+.detailsContent .second-row .sr-price {
+  color: #FC5056;
+}
+
+.detailsTicket {
+  background-color: #F7F8FA;
+  padding: 2rem;
+}
+
+.detailsTicket .ticketTop strong{
+  font-size: 1.8rem;
+  margin-right: 0.3rem;
+}
+
+.detailsTicket .ticketTop p,
+.detailsTicket .ticketInput p {
+  color: #676D85;
+}
+
+.detailsTicket .ticketInput {
+  display: flex;
+  flex-direction: column;
+}
+
+.detailsTicket .ticketInput label {
+  color: #051036;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.detailsTicket .ticketInput .ticketCatBtn button,
+.detailsTicket .ticketInput .ticketCatBtn span {
+  color: #676D85;
+  border: 1px solid #676D85;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.detailsTicket .ticketInput .ticketCatBtn span {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+.detailsTicket .ticketInput .ticketCatBtn button:hover {
+  background-color: #676D85;
+  color: #ffffff;
+}
+
+.detailsTicket .ticketTotal strong{
+  font-size: 1.5rem;
+  color: #FC5056;
+}
+
+.detailsTicket .ticketTotal {
+  border-top: 1px solid #A9AFBB;
+  padding-top: 1rem;
+}
+
+.detailsTicket .ticketTop {
+  border-bottom: 1px solid #A9AFBB;
+  padding-bottom: 1rem;
+}
+
+.detailsTicket .ticketBtn {
+  background-color: #FC5056;
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.detailsTicket .ticketBtn:hover {
+  background-color: #F54336;
+}
+
+.detailsContent .detailsSubtitle {
+  font-weight: 700;
+  color: #051036;
+  margin-bottom: 1rem;
+}
+
+.detailsContent .detailsOverview p {
+  color: #676D85;
+  font-size: 0.9rem;
+}
+
+.detailsContent .detailsCarrossel h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #051036;
+}
+
+.detailsContent .detailsCarrossel{
+  padding: 2rem;
+}
+
+.detailsContent .detailsRating {
+  background-color: #F7F8FA;
+  padding: 2rem;
+}
+
+.detailsRating .averageScore {
+  background-color: #FC5056;
+  padding: 1rem;
+  color: #ffffff;
+  height: 100%;
+}
+
+.detailsRating .averageScore h2 {
+  font-size: 2.5rem;
+}
+
+.averageCategories .averageTitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #051036;
+}
+
+.averageCategories span {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.averageCategories .progressRange {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  width: 100%;
+  background: #ddd;
+  border-radius: 5px;
+  position: relative;
+  pointer-events: none;
+}
+
+.averageCategories .progressRange::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0;
+  height: 0;
+}
+
+.averageCategories .progressRange::-moz-range-thumb {
+  width: 0;
+  height: 0;
+}
+
+.averageCategories .progressRange::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #FC5056 0%, #FC5056 var(--value), #ddd var(--value), #ddd 100%);
+}
+
+.addReview {
+  padding: 2rem;
+  background-color: #F7F8FA;
+}
+
+.addReview h5,
+.showReviews h5 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #051036;
+}
+
+.addReview .rc-title {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #676D85;
+}
+
+.addReview .form-control {
+  font-size: 0.9rem;
+  border: none;
+  padding: 0.8rem 0.5rem;
+}
+
+.addReview .btn {
+  background-color: #FC5056;
+  padding: 1rem 2rem;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.addReview .btn:hover {
+  background-color: #F54336;
+}
+
+.star-rating .star-label {
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.star-rating input[type=radio] {
+  display: none;
+}
+
+.star-rating .star {
+  font-size: 15px;
+  color: #A9AFBB;
+  transition: color 0.2s;
+}
+
+.star-rating .star.active {
+  color: #f1f52c;
+}
+
+.showReviews .review {
+  border: 1px solid #A9AFBB;
+  padding: 2rem;
+}
+
+.review .userIcon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.review .review-date,
+.review .user-review,
+.review .comment {
+  font-size: 0.8rem;
+  color: #676D85;
+}
+
+.review .review-rating{
+  display: flex;
+  align-items: center;
+  background-color: #FC5056;
+  padding: 2px 5px;
+  color: #ffffff;
+  border-radius: 5px;
+  font-size: 0.7rem;
+}
+
+.review .review-rating p {
+  font-size: 0.8rem;
+}
+

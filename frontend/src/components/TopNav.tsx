@@ -11,10 +11,10 @@ const TopNav: React.FC = () => {
             <span>info@trisog.com</span>
         </div>
         <div className="right-side">
-            <a href="https://twitter.com" target="_blank"><AiOutlineTwitter /></a>
-            <a href="#"><FaLinkedinIn /></a>
-            <a href="#"><AiOutlineGoogle /></a>
-            <a href="#"><FaPinterestP /></a>
+            <a href="https://media1.tenor.com/m/_6r0zVrSkEcAAAAd/alexandre-de-moraes-xand%C3%A3o.gif" target="_blank"><AiOutlineTwitter /></a>
+            <a href="https://www.linkedin.com/" target="_blank"><FaLinkedinIn /></a>
+            <a href="https://www.google.com/" target="_blank"><AiOutlineGoogle /></a>
+            <a href="https://br.pinterest.com/" target="_blank"><FaPinterestP /></a>
             <select className="selector ms-3">
                 <option value="EUR">eur</option>
                 <option value="USD">us</option>

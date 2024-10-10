@@ -1,10 +1,26 @@
 import { Col } from 'react-bootstrap';
 import { CiClock2, CiStar } from 'react-icons/ci';
+import { useNavigate } from 'react-router-dom';
 
 type Destination = {
   name: string;
   city: string;
   country: string;
+}
+
+type Review = {
+  id: number;
+  servicesRating: number;
+  locationsRating: number;
+  amenitiesRating: number;
+  pricesRating: number;
+  roomRating: number;
+  comment?: string;
+  isAnonymous?: boolean;
+  tour: {
+    id: number;
+    title: string;
+  }
 }
 
 type Tour = {
@@ -14,13 +30,31 @@ type Tour = {
   description?: string;
   price: number;
   durationDays: number;
-  rating?: number;
-  reviews?: number;
+  reviews: Review[];
 }
 
-const CardItem: React.FC<Tour> = ({ title, price, durationDays, destination, rating, reviews }) => {
+const CardItem: React.FC<Tour> = ({ id, title, price, durationDays, destination, reviews = [] }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/tours/${id}`);
+  }
+
+  const rating = reviews.length > 0
+  ? (reviews.reduce((acc, review) => {
+    const reviewAverage = (
+      review.servicesRating +
+      review.locationsRating +
+      review.amenitiesRating +
+      review.pricesRating +
+      review.roomRating
+    ) / 5
+    return acc + reviewAverage
+  }, 0) / reviews.length).toFixed(1)
+  : '0';
+
   return (
-      <Col md={4} className="tour-card">
+      <Col md={4} className="tour-card" onClick={handleClick}>
         <img src="https://via.placeholder.com/200" alt={title} className="card-image"/>
         <div className="card-content">
           <p className="card-location">
@@ -30,10 +64,10 @@ const CardItem: React.FC<Tour> = ({ title, price, durationDays, destination, rat
           <div className="card-info">
             <div className="card-rating">
               <CiStar className="card-icon"/>
-              <p>{rating ? `${rating}` : '0'}</p>
+              <p>{rating}</p>
             </div>
             <div className="card-reviews">
-              <p>{reviews ? `${reviews} reviews` : '0 reviews'}</p>
+              <p>{reviews.length} reviews</p>
             </div>
             <div className='card-duration'>
               <CiClock2 className="card-icon"/>
