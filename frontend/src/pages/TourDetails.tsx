@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import NavBar from '../components/Navbar/Navbar'
 import Footer from '../components/Footer'
 import { Row, Col } from 'react-bootstrap'
@@ -7,12 +7,165 @@ import "react-datepicker/dist/react-datepicker.css";
 import { IoLocationOutline, IoShareSocialOutline } from 'react-icons/io5'
 import { IoMdHeartEmpty, IoMdHeart } from 'react-icons/io'
 import { FaStar } from 'react-icons/fa'
-import TourList from '../components/TourList'
 import StarRating from '../components/StarRating'
-import { CiStar } from 'react-icons/ci'
+import { useParams } from 'react-router-dom'
+import axios from 'axios';
+import { toast } from 'react-toastify'
+import RelatedTours from '../components/RelatedTours'
+
+type Destination = {
+  name: string;
+  city: string;
+  country: string;
+}
+
+type Review = {
+  id: number;
+  servicesRating: number;
+  locationsRating: number;
+  amenitiesRating: number;
+  pricesRating: number;
+  roomRating: number;
+  comment?: string;
+  isAnonymous?: boolean;
+  tour: {
+    id: number;
+    title: string;
+  }
+}
+
+type Tour = {
+  id: number,
+  destination: Destination;
+  title: string;
+  description?: string;
+  price: number;
+  durationDays: number;
+  rating?: number;
+  reviews: Review[];
+  tourCategories: { category: { id: number; name: string; }}[];
+}
 
 const TourDetails = () => {
   const [isHeartHovered, setIsHeartHovered] = useState(false);
+  const { id } = useParams<{ id: string}>();
+  const [tour, setTour] = useState<Tour | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [adult, setAdult] = useState(0);
+  const [kid, setKid] = useState(0);
+  const [children, setChildren] = useState(0);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get<Tour>(`http://localhost:3333/tours/${id}`);
+                console.log('Tour: ', response.data);
+                setTour(response.data);
+            } catch (error) {
+                setError('Failed to fetch tours.');
+            }
+        };
+
+        fetchData();
+    }, [id]);
+
+    if (error) {
+      return <p>Error: {error}</p>
+    }
+
+    if (!tour) {
+      return <p>Loading...</p>
+    }
+
+    const calculateRating = () => {
+      if (tour.reviews.length === 0) return '0';
+  
+      const totalRating = tour.reviews.reduce((acc, review) => {
+        const reviewAverage = (
+          review.servicesRating +
+          review.locationsRating +
+          review.amenitiesRating +
+          review.pricesRating +
+          review.roomRating
+        ) / 5;
+        return acc + reviewAverage;
+      }, 0);
+  
+      return (totalRating / tour.reviews.length).toFixed(1);
+    };
+
+    const sRating = tour.reviews.length > 0 ? 
+      (tour.reviews.reduce((acc, review) => acc + review.servicesRating, 0) / tour.reviews.length).toFixed(1)
+      : 0;
+
+      const lRating = tour.reviews.length > 0 ? 
+      (tour.reviews.reduce((acc, review) => acc + review.locationsRating, 0) / tour.reviews.length).toFixed(1)
+      : 0;
+
+      const aRating = tour.reviews.length > 0 ? 
+      (tour.reviews.reduce((acc, review) => acc + review.amenitiesRating, 0) / tour.reviews.length).toFixed(1)
+      : 0;
+
+      const pRating = tour.reviews.length > 0 ? 
+      (tour.reviews.reduce((acc, review) => acc + review.pricesRating, 0) / tour.reviews.length).toFixed(1)
+      : 0;
+
+      const rRating = tour.reviews.length > 0 ? 
+      (tour.reviews.reduce((acc, review) => acc + review.roomRating, 0) / tour.reviews.length).toFixed(1)
+      : 0;
+
+      const ratingMsg = (averageRating: number) => {
+        if (averageRating >= 4 && averageRating <= 5) {
+          return 'Excellent';
+        } else if (averageRating >= 3 && averageRating < 4) {
+          return 'Good';
+        } else if (averageRating >= 2 && averageRating < 3) {
+          return 'Moderate';
+        } else {
+          return 'Poor';
+        }
+      }
+  
+    const averageRating = calculateRating();
+
+    const totalPrice = ((adult * tour.price) + (kid * tour.price / 2) + (children * tour.price / 2)).toFixed(2);
+
+    const addAdult = () => setAdult(prev => prev + 1);
+    const addKid = () => setKid(prev => prev + 1);
+    const addChildren = () => setChildren(prev => prev + 1);
+
+    const subtract = () => {
+      let valid = false;
+
+      if (adult > 0) {
+        setAdult(prev => prev - 1);
+        valid = true;
+      }
+
+      if (kid > 0) {
+        setKid(prev => prev - 1);
+        valid = true;
+      }
+
+      if (children > 0) {
+        setChildren(prev => prev - 1);
+        valid = true;
+      }
+
+      if (!valid) toast.warning(`Number is already zero, can't subtract`);
+    }
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+      e.preventDefault();
+      if(adult === 0){
+        toast.error('Please select at least one adult');
+        return;
+      }
+      toast.success('Booking confirmed!');
+    }
+
+    const cats = tour.tourCategories.map(cat => cat.category.name);
+
   return (
     <div className='detailsContainer'>
         <NavBar/>
@@ -23,7 +176,7 @@ const TourDetails = () => {
                 <div className='d-flex justify-content-between align-items-center mt-3 first-row'>
                   <div className='d-flex align-items-center'>
                     <IoLocationOutline />
-                    <p className='ms-2'>Budapest, Hungary</p>
+                    <p className='ms-2'>{tour.destination.city}, {tour.destination.country}</p>
                     <a href="" className='ms-3'>View on map</a>
                   </div>
                   <div className='fr-icon'>
@@ -40,15 +193,15 @@ const TourDetails = () => {
                     
                   </div>
                 </div>
-                <h3 className="detailsTitle mt-2">Wonders of the West Coast & Kimberly</h3>
+                <h3 className="detailsTitle mt-2">{tour.title}</h3>
                 <Row className='d-flex align-items-center mt-4 second-row'>
                   <Col md={1}>
                     <p>From</p>
-                    <strong className='sr-price'>$104</strong>
+                    <strong className='sr-price'>${tour.price}</strong>
                   </Col>
                   <Col>
                     <p>Duration</p>
-                    <strong>7 days</strong>
+                    <strong>{tour.durationDays} days</strong>
                   </Col>
                   <Col md={2}>
                     <p>Max People</p>
@@ -60,24 +213,24 @@ const TourDetails = () => {
                   </Col>
                   <Col md={3}>
                     <p>Tour Type</p>
-                    <strong>Adventure, Beach</strong>
+                    <strong>{tour.tourCategories.map((cat) => cat.category.name).join(', ')}</strong>
                   </Col>
                   <Col md={3}>
                     <p>Reviews</p>
                     <div className='d-flex align-items-center'>
                       <FaStar className='me-2 sr-star'/>
-                      <strong className='me-2'>4.8</strong>
-                      <p>(15 reviews)</p>
+                      <strong className='me-2'>{averageRating}</strong>
+                      <p>({tour.reviews.length} reviews)</p>
                     </div>
                   </Col>
                 </Row>
             </Col>
             <Col md={3} className='detailsTicket'>
               <div className='ticketTop d-flex align-items-center mb-3'>
-                <strong>$104</strong>
+                <strong>${tour.price}</strong>
                 <p>/ per person</p>
               </div>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className='mb-3 ticketInput'>
                   <label htmlFor="">Date: </label>
                     <DatePicker
@@ -103,9 +256,9 @@ const TourDetails = () => {
                       <div className='d-flex justify-content-between align-items-center mb-3'>
                         <p>Adults (+18 years)</p>
                         <div className='ticketCatBtn d-flex align-items-center'>
-                          <button>-</button>
-                          <span className='ms-1'>0</span>
-                          <button className='ms-1'>+</button>
+                          <button type='button' onClick={subtract}>-</button>
+                          <span className='ms-1'>{adult}</span>
+                          <button type='button' className='ms-1' onClick={addAdult}>+</button>
                         </div>
                       </div>
                     </div>
@@ -113,9 +266,9 @@ const TourDetails = () => {
                       <div className='d-flex justify-content-between align-items-center mb-3'>
                         <p>Kids (+12 years)</p>
                         <div className='ticketCatBtn d-flex align-items-center'>
-                          <button>-</button>
-                          <span className='ms-1'>0</span>
-                          <button className='ms-1'>+</button>
+                          <button type='button' onClick={subtract}>-</button>
+                          <span className='ms-1'>{kid}</span>
+                          <button type='button' className='ms-1' onClick={addKid}>+</button>
                         </div>
                       </div>
                     </div>
@@ -123,15 +276,15 @@ const TourDetails = () => {
                       <div className='d-flex justify-content-between align-items-center mb-3'>
                         <p>Children (+3 years)</p>
                         <div className='ticketCatBtn d-flex align-items-center'>
-                          <button>-</button>
-                          <span className='ms-1'>0</span>
-                          <button className='ms-1'>+</button>
+                          <button type='button' onClick={subtract}>-</button>
+                          <span className='ms-1'>{children}</span>
+                          <button type='button' className='ms-1' onClick={addChildren}>+</button>
                         </div>
                       </div>
                     </div>
                     <div className='d-flex justify-content-between align-items-center mb-3 ticketTotal'>
                       <p>Total</p>
-                      <strong>$104</strong>
+                      <strong>${totalPrice}</strong>
                     </div>
                     <button type="submit" className='btn ticketBtn'>Book Now</button>
                 </div>
@@ -142,7 +295,7 @@ const TourDetails = () => {
           <Col md={6}>
             <div className="detailsOverview">
               <h5 className="detailsSubtitle">Overview</h5>
-              <p className='mb-4'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit quidem tempora voluptates vel recusandae nemo nisi illo repellat animi numquam eligendi ratione omnis cum ut obcaecati voluptate doloremque, sed totam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit adipisci laborum recusandae velit fuga vero optio exercitationem, quam accusamus eius corrupti nihil tempore quia possimus tenetur harum dolore doloribus? Dignissimos!</p>
+              <p className='mb-4'>{tour.description}</p>
             </div>
             <div className="detailsMap">
               <h5 className="detailsSubtitle">Map</h5>
@@ -154,10 +307,10 @@ const TourDetails = () => {
                 <Row>
                 <Col md={4}>
                     <div className="averageScore d-flex flex-column align-items-center justify-content-center">
-                      <h2>4.8</h2>
+                      <h2>{averageRating}</h2>
                       <div className="scoreStatus d-flex align-items-center">
                         <FaStar className='me-2' />
-                        <p>Excellent</p>
+                        <p>{ratingMsg(parseFloat(averageRating))}</p>
                       </div>
                     </div>
                 </Col>
@@ -169,7 +322,7 @@ const TourDetails = () => {
                           type="range"
                           readOnly
                           className='progressRange' />
-                        <span className='ms-2'>4.0</span>
+                        <span className='ms-2'>{sRating}</span>
                       </div>
                     </div>
                     <div className="averageCategories">
@@ -179,7 +332,7 @@ const TourDetails = () => {
                           type="range"
                           readOnly
                           className='progressRange' />
-                        <span className='ms-2'>4.0</span>
+                        <span className='ms-2'>{lRating}</span>
                       </div>
                     </div>
                     <div className="averageCategories">
@@ -189,7 +342,7 @@ const TourDetails = () => {
                           type="range"
                           readOnly
                           className='progressRange' />
-                        <span className='ms-2'>4.0</span>
+                        <span className='ms-2'>{aRating}</span>
                       </div>
                     </div>
                 </Col>
@@ -201,7 +354,7 @@ const TourDetails = () => {
                           type="range"
                           readOnly
                           className='progressRange' />
-                        <span className='ms-2'>4.0</span>
+                        <span className='ms-2'>{pRating}</span>
                       </div>
                     </div>
                     <div className="averageCategories">
@@ -221,7 +374,7 @@ const TourDetails = () => {
                           type="range"
                           readOnly
                           className='progressRange' />
-                        <span className='ms-2'>4.0</span>
+                        <span className='ms-2'>{rRating}</span>
                       </div>
                     </div>
                 </Col>
@@ -229,7 +382,7 @@ const TourDetails = () => {
               </div>
             </div>
             <div className="showReviews mt-3 mb-3">
-              <h5>Showing 1 review</h5>
+              <h5>Showing {tour.reviews.length} review</h5>
               <div className="review mt-3 mb-3">
                   <Row>
                     <Col md={3} className='d-flex justify-content-center'>
@@ -317,7 +470,7 @@ const TourDetails = () => {
           <Col md={3}></Col>
           <div className="detailsCarrossel d-flex flex-column justify-content-center mt-4">
             <h3 className='text-center'>You may also like...</h3>
-            <TourList/>
+            <RelatedTours currentTourId={tour.id} category={cats.join(',')}/>
           </div>
         </Row>
       </div>
@@ -326,4 +479,4 @@ const TourDetails = () => {
   )
 }
 
-export default TourDetails
+export default TourDetails;

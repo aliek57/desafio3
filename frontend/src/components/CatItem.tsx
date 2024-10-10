@@ -18,10 +18,8 @@ const CatItem: React.FC<CatProps> = ({ id, name, tours }) => {
   }
 
   const minCategoryPrice = () => {
-    console.log('tours: ', tours)
     const validPrice = tours
       .map(tour => {
-        console.log('price: ',tour.tour.price)
         return tour.tour.price;
       })
       .filter(price => typeof price === 'number' && !isNaN(price))

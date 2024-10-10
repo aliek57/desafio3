@@ -1,5 +1,6 @@
 import { Col } from 'react-bootstrap';
 import { CiClock2, CiStar } from 'react-icons/ci';
+import { useNavigate } from 'react-router-dom';
 
 type Destination = {
   name: string;
@@ -32,7 +33,13 @@ type Tour = {
   reviews: Review[];
 }
 
-const CardItem: React.FC<Tour> = ({ title, price, durationDays, destination, reviews = [] }) => {
+const CardItem: React.FC<Tour> = ({ id, title, price, durationDays, destination, reviews = [] }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/tours/${id}`);
+  }
+
   const rating = reviews.length > 0
   ? (reviews.reduce((acc, review) => {
     const reviewAverage = (
@@ -47,7 +54,7 @@ const CardItem: React.FC<Tour> = ({ title, price, durationDays, destination, rev
   : '0';
 
   return (
-      <Col md={4} className="tour-card">
+      <Col md={4} className="tour-card" onClick={handleClick}>
         <img src="https://via.placeholder.com/200" alt={title} className="card-image"/>
         <div className="card-content">
           <p className="card-location">

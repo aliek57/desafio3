@@ -87,7 +87,6 @@ const ToursPackage = () => {
         const fetchTours = async () => {
             try {
                 const response = await axios.get<Tour[]>('http://localhost:3333/tours/')
-                console.log("fetched tours: ", response.data)
                 setTours(response.data)
                 setFilteredTours(response.data)
                 setMaxPrice(Math.max(...response.data.map(tour => tour.price)))

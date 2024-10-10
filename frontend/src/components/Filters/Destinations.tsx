@@ -34,7 +34,6 @@ const Destinations: React.FC<DestinationsProps> = ({ onDestination }) => {
                     city: tour.destination.city,
                     continent: tour.destination.continent,
                 }));
-                console.log('Destinations: ',destinationData)
                 setDestinations(destinationData);
             } catch (error) {
                 setError('Failed to fetch.');
