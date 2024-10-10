@@ -1,8 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { AiOutlineUser  } from "react-icons/ai";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useContext } from "react";
 
 const NavBar: React.FC = () => {
+    const { userProvider, signOut, isAuthenticated } = useContext(AuthContext);
+
     return (
         <Navbar expand="lg" className="navbar">
             <Container>
@@ -35,13 +39,23 @@ const NavBar: React.FC = () => {
                         </NavLink>
                     </Nav>
                     <div className="loginContainer">
-                        <AiOutlineUser style={{ marginRight: '5px', width:'20', height:'20'}} />
-                        <NavLink to="/login" className='loginButton'>
-                            Login
-                        </NavLink>
-                        <NavLink to="/signup" className='loginButton'>
-                            Sign Up
-                        </NavLink>
+                        {isAuthenticated ? (
+                            <>
+                                <AiOutlineUser style={{ marginRight: '5px', width:'20', height:'20'}} />
+                                <span>{userProvider?.name}</span>
+                                <button onClick={signOut} className="btn ms-2 btnLogout">Logout</button>
+                            </>
+                        ) : (
+                            <>
+                                <AiOutlineUser style={{ marginRight: '5px', width:'20', height:'20'}} />
+                                <NavLink to="/login" className='loginButton'>
+                                    Login
+                                </NavLink>
+                                <NavLink to="/signup" className='loginButton'>
+                                    Sign Up
+                                </NavLink>
+                            </>
+                        )}
                     </div>
                 </Navbar.Collapse>
             </Container>

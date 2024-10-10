@@ -75,6 +75,17 @@
   font-weight: 400;
 }
 
+.loginContainer .btnLogout {
+  color: #ffffff;
+  background-color: #FC5056;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.loginContainer.btnLogout:hover {
+  background-color: #FF3636;
+}
+
 /* Footer */
 
 .footer {
