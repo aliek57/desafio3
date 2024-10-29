@@ -378,7 +378,7 @@
 
 .section1 {
   height: 45vh;
-  background-image: url('https://via.placeholder.com/1920x1080');
+  /* background-image: url('https://via.placeholder.com/1920x1080'); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

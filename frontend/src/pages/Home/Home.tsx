@@ -2,20 +2,25 @@ import "./Home.module.css";
 import NavBar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer";
 import TopNav from "../../components/TopNav";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import SearchBar from "../../components/SearchBar";
 import TourList from "../../components/TourList";
 import { ImCheckmark2 } from "react-icons/im";
 import { PiQuotes } from "react-icons/pi";
 import CatList from "../../components/CatList";
+import useLoadImages from "../../hooks/useLoadImages";
 
 const Home = () => {
+  const imgURL = useLoadImages();
+  
   return (
     <div className="homeContainer">
       <TopNav/>
       <NavBar/>
       <div className="homeContent">
-        <div className="section1">
+        <div 
+          className="section1"
+          style={{backgroundImage: `url(${imgURL.banner})`}}>
           <Container className="text-center text-overlay">
             <h3>Save 15% off in Worldwide</h3>
             <h1>Travel & Adventures</h1>
@@ -57,7 +62,7 @@ const Home = () => {
                 <Col xs={12} md={8}>
                   <Row>
                     <Col xs={4}>
-                      <img src="https://via.placeholder.com/150" alt="Image1" className="image-fluid" />
+                      {imgURL.banner && <img src={imgURL.banner} alt="Image1" className="image-fluid" />}
                     </Col>
                     <Col xs={4}>
                       <img src="https://via.placeholder.com/150" alt="Image2" className="image-fluid" />
