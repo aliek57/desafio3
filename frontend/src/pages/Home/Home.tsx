@@ -1,7 +1,7 @@
 import "./Home.module.css";
 import NavBar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer";
-import TopNav from "../../components/TopNav";
+import TopNav from "../../components/TopNav/TopNav";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import SearchBar from "../../components/SearchBar";
 import TourList from "../../components/TourList";

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { NavLink } from 'react-router-dom';
 import axios from 'axios'
-import TopNav from '../components/TopNav';
+import TopNav from '../components/TopNav/TopNav';
 import NavBar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer';
 import SearchBar from '../components/SearchBar';

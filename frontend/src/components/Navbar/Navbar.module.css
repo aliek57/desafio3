@@ -1,0 +1,64 @@
+.navbar {
+    background-color: #ffff;
+    padding-bottom: 0.8rem;
+}
+
+.navbarBrand {
+    margin-right: 3.5rem;
+}
+
+.navLink {
+    position: relative;
+    padding: 0 0.5rem;
+    font-weight: 600 !important;
+    transition: color 0.3s ease-in-out;
+}
+
+.navLink::after {
+    display: inline-block;
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    left: 0;
+    bottom: -5px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease-in-out;
+}
+
+.navLink:hover::after {
+    width: 100%;
+}
+
+.activeLink,
+.activeLink:hover {
+    color: var(--primary-color);
+}
+  
+.loginContainer {
+    display: flex;
+    align-items: center;
+    padding-top: 0.5rem;
+}
+  
+.loginButton {
+    font-weight: 400;
+    text-decoration: none;
+    color: #000000;
+    padding: 0 0.2rem;
+    position: relative;
+    transition: font-weight 0.3s ease;
+}
+
+.loginButton:hover {
+    font-weight: 600;
+}
+
+.loginButton:not(:last-child)::after {
+    content: ' / ';
+    color: #000000;
+}
+
+.loginButton:hover::after {
+    font-weight: 400;
+}

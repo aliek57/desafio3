@@ -1,4 +1,4 @@
-import TopNav from '../components/TopNav';
+import TopNav from '../components/TopNav/TopNav';
 import NavBar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer';
 import { Container, Row, Col } from 'react-bootstrap';
