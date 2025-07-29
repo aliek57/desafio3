@@ -388,7 +388,7 @@ a {
 
 .text-overlay {
   position: relative;
-  z-index: 9999;
+  z-index: 9998;
   color: var(--text-light);
   text-align: center;
 }

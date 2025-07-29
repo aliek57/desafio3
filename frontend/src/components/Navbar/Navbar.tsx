@@ -2,12 +2,27 @@ import { NavLink } from "react-router-dom";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { AiOutlineUser  } from "react-icons/ai";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import LogOutModal from "../LogOutModal/LogOutModal"
 
 import styles from "./Navbar.module.css"
 
 const NavBar: React.FC = () => {
     const { userProvider, signOut, isAuthenticated } = useContext(AuthContext);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleLogoutClick = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleLogout = () => {
+        signOut();
+        setIsModalOpen(false);
+    };
 
     return (
         <Navbar expand="lg" className={styles.navbar}>
@@ -45,7 +60,7 @@ const NavBar: React.FC = () => {
                             <>
                                 <AiOutlineUser style={{ marginRight: '5px', width:'20', height:'20'}} />
                                 <span>{userProvider?.name}</span>
-                                <button onClick={signOut} className='btn btn-primary ms-3'>Logout</button>
+                                <button onClick={handleLogoutClick} className='btn btn-primary ms-3'>Logout</button>
                             </>
                         ) : (
                             <>
@@ -58,6 +73,11 @@ const NavBar: React.FC = () => {
                                 </NavLink>
                             </>
                         )}
+                        <LogOutModal
+                            isOpen={isModalOpen}
+                            onClose={handleCloseModal}
+                            onConfirm={handleLogout}
+                        />
                     </div>
                 </Navbar.Collapse>
             </Container>
