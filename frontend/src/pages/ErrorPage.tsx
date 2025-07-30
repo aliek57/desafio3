@@ -1,6 +1,6 @@
 import TopNav from '../components/TopNav/TopNav';
 import NavBar from '../components/Navbar/Navbar';
-import Footer from '../components/Footer';
+import Footer from '../components/Footer/Footer';
 import { Container, Row, Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 

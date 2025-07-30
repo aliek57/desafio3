@@ -4,7 +4,7 @@ import styles from './SignUp.module.css';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import { auth } from '../../services/firebase';
 import { toast } from 'react-toastify';
-import { updateProfile } from '@firebase/auth';
+import { updateProfile } from 'firebase/auth';
 
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useSignInWithGoogle } from '../../hooks/useSignInWithGoogle';

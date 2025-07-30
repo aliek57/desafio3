@@ -1,0 +1,93 @@
+.footer {
+  background-color: #000000;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.footer h5 {
+  font-family: "Kaushan Script", cursive;
+  font-size: 1rem;
+  color: var(--text-light);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-grow: 1;
+  padding: 0 2rem;
+  position: relative;
+}
+
+.column:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 1px;
+  height: 100%;
+  background-color: #333333;
+}
+
+.column:last-child::after {
+  border: none;
+}
+
+.highlight {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.socialIcons a {
+  font-size: 20px;
+  color: var(--text-light);
+}
+
+.middle {
+  flex-grow: 2;
+  padding-left: 40px;
+}
+
+.column a {
+  color: var(--text-light);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.column a:hover {
+  color: var(--primary-color);
+}
+
+.column ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+}
+
+.column ul li {
+  margin-bottom: 0.5rem;
+}
+
+.form {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.column .input {
+    padding-left: 30px;
+}
+
+.inputIcon {
+  position: absolute;
+  height: 100%;
+  top: 62px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 8px;
+  color: var(--text-muted);
+  z-index: 1;
+  pointer-events: none;
+}
